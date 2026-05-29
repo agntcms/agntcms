@@ -1,0 +1,34 @@
+{
+  "slug": "404",
+  "seo": {
+    "title": "Page not found · Servicely™ (demo)",
+    "description": "The URL exists in our heads, but not in this deploy. Likely culprits: a typo, a stale link, or a redirect we forgot to set up."
+  },
+  "sections": [
+    {
+      "id": "imagetext-1",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "404 · page not found",
+        "headline": "## This page is *working from home.* ☕",
+        "body": "The URL exists in our heads, but not in this deploy. Likely culprits: a typo, a stale link, or a redirect we forgot to set up (Friday afternoon, naturally).\n\nTry the homepage or just tell us — we read every report and usually fix the link the same day. Reminder: this is a demo site, so the page count is deliberately small — a real site would have many more landing pages to land on.",
+        "imagePosition": "left",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Back to home"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Report broken link"
+        },
+        "image": {
+          "filename": "0d0475f21aa96435a8ed3cdb2fddcc6278492e76ae842f569432454f4d33631a.jpg",
+          "alt": "Coffee cup beside a notebook on a warm desk"
+        }
+      }
+    }
+  ]
+}

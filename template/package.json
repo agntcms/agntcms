@@ -1,0 +1,36 @@
+{
+  "name": "agntcms-template",
+  "version": "0.5.5",
+  "description": "Reference Next.js project used by create-agntcms-app. Not published to npm.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "skills:sync": "agntcms-skills-sync"
+  },
+  "dependencies": {
+    "@agntcms/next": "workspace:*",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@agntcms/skills": "workspace:*",
+    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4",
+    "tailwindcss-animate": "^1",
+    "tailwindcss-react-aria-components": "^2",
+    "typescript": "^5.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
+}

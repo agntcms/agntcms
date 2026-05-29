@@ -1,0 +1,61 @@
+{
+  "slug": "article-schemas",
+  "seo": {
+    "title": "Why we moved schemas next to components · Servicely™",
+    "description": "A short essay on how the JSON-sidecar pattern fell apart in three real codebases. A demo article shipped with the template."
+  },
+  "sections": [
+    {
+      "id": "articlehero-1",
+      "type": "ArticleHero",
+      "data": {
+        "category": "Engineering",
+        "title": "Why we moved schemas next to components",
+        "authorName": "Tom Larsen",
+        "meta": "8 min read · Apr 28, 2026",
+        "authorPhoto": {
+          "filename": "cb3acf58b57417a4b26474ba04c096af7103c4320ed2f4f3683f79d7670a055c.jpg",
+          "alt": ""
+        },
+        "coverImage": {
+          "filename": "cae09f4729f8a348b67267c2f2a550be0f3bfa420689afe1a5cf8b7e2b146238.png",
+          "alt": "Warm photograph evoking shipping"
+        },
+        "backLink": {
+          "type": "internal",
+          "slug": "blog",
+          "label": "back to blog"
+        }
+      }
+    },
+    {
+      "id": "articlebody-1",
+      "type": "ArticleBody",
+      "data": {
+        "body": "Every platform we've worked with treated content schemas as a separate concern from the components that render them. The schema lived in a JSON file, a Sanity studio config, or a Contentful UI. The component lived in the codebase. They drifted.\n\nIn every project, eventually, somebody adds a field to the schema and forgets the component. Or refactors the component and leaves a dead field in the schema. By month six, no one trusts either.\n\n## The fix is boring\n\nThe schema lives next to the component. They're the same file. The component declares what content it needs, in TypeScript, with whatever validation it wants.\n\nWhen you change the component, the schema changes with it. The editor reads the same module the renderer does. There is no second source of truth, because there is no second source.\n\n## What this unlocks\n\n- AI agents can read the schema directly — no MCP server, no separate API.\n- Refactors are atomic. Rename a prop, the editor field renames itself.\n- Type-checks catch dead fields at build time.\n\n> The first time we deleted a field and watched the editor UI update on the next deploy, the marketing team applauded. They'd been begging for that for two years.\n\nIt is not a clever idea. It is what should have been the default ten years ago."
+      }
+    },
+    {
+      "id": "banner-1",
+      "type": "Banner",
+      "data": {
+        "headline": "## Built for teams who *ship.*",
+        "lead": "Two minutes to a working site. One command to deploy.",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Start free"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Read the docs"
+        },
+        "image": {
+          "filename": "",
+          "alt": ""
+        }
+      }
+    }
+  ]
+}

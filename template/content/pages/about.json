@@ -1,0 +1,307 @@
+{
+  "slug": "about",
+  "seo": {
+    "title": "About · Servicely™ (demo)",
+    "description": "A made-up team behind a made-up platform. The numbers on this page are decorative, the dashboard is decorative, and Servicely™ doesn't actually exist — it's the demo content for an agntcms template."
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "Hero",
+      "data": {
+        "eyebrow": "About",
+        "headline": "# A small team. *A big chart on the pitch deck.*",
+        "lead": "There are fourteen of us (one is the founder's dog). We're across four time zones. None of us has ever worked at a FAANG, but one of us did a two-month internship at a fintech that subsequently exploded. Reminder: this is a demo, and the team doesn't really exist.",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Open roles"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Read the manifesto"
+        },
+        "layout": "split",
+        "background": "paper",
+        "image": {
+          "filename": "4a3e28f85dc850c347ea0fd931696aa936a6bd45f193e7f1c9328b5896fb272c.jpg",
+          "alt": "Warm office team at work"
+        }
+      }
+    },
+    {
+      "id": "logos-1",
+      "type": "LogoStrip",
+      "data": {
+        "lead": "Backed by people who once worked somewhere",
+        "logos": [
+          {
+            "_id": "l-1",
+            "name": "EX-STRIPE"
+          },
+          {
+            "_id": "l-2",
+            "name": "EX-NOTION"
+          },
+          {
+            "_id": "l-3",
+            "name": "EX-LINEAR"
+          },
+          {
+            "_id": "l-4",
+            "name": "EX-A-STARTUP"
+          }
+        ]
+      }
+    },
+    {
+      "id": "features-1",
+      "type": "FeatureGrid",
+      "data": {
+        "eyebrow": "",
+        "headline": "",
+        "lead": "",
+        "columns": "4",
+        "variant": "stat",
+        "cards": [
+          {
+            "_id": "c-1",
+            "iconSvg": "",
+            "stat": "2.4k",
+            "label": "active profiles",
+            "body": "In forty-one countries (one dropped off — as usual)."
+          },
+          {
+            "_id": "c-2",
+            "iconSvg": "",
+            "stat": "14",
+            "label": "team members",
+            "body": "Remote. Chat in Slack, video once a week, no exceptions."
+          },
+          {
+            "_id": "c-3",
+            "iconSvg": "",
+            "stat": "99.99%",
+            "label": "uptime, last quarter",
+            "body": "No 'except Saturdays,' no 'we had a release.'"
+          },
+          {
+            "_id": "c-4",
+            "iconSvg": "",
+            "stat": "38ms",
+            "label": "p50 TTFB",
+            "body": "Faster than any 'org-wide efficiency review.'"
+          }
+        ],
+        "footerCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        }
+      }
+    },
+    {
+      "id": "imagetext-1",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "What we stand for",
+        "headline": "## Software should *help* you, not *remind you it exists.*",
+        "body": "Most platforms are optimized for the people selling the platform. Pricing on request. Features behind tiers. Support via a ticket that gets read six hours later by a contractor on the other side of the world.\n\nWe're the opposite. The platform is built by developers who use it. Pricing is on the website. Support is Artyom — thirty-four, on Telegram, usually replies before you've finished sending.",
+        "imagePosition": "right",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Read our principles"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "image": {
+          "filename": "0418d7ed21f57e7b9e0546725c92b8419daeaa355675d9070fab0c2013cf1524.jpg",
+          "alt": "Warm office with team members at work"
+        }
+      }
+    },
+    {
+      "id": "team-1",
+      "type": "TeamGrid",
+      "data": {
+        "eyebrow": "Team",
+        "headline": "## The people *shipping it.*",
+        "lead": "Fourteen humans across nine time zones. Hiring two more this quarter — without a 'cultural fit' loop.",
+        "columns": "4",
+        "people": [
+          {
+            "_id": "p-1",
+            "name": "Mira Saito",
+            "role": "CEO · Berlin",
+            "bio": "Previously product at a marketplace nobody admits to using anymore. Wrote the first version of Servicely in a rented kitchen between two relocations.",
+            "photo": {
+              "filename": "c4d2f0d1a310e457ac722a399693652e3c86c55b294243d5ffc679394e12f9d1.jpg",
+              "alt": "Portrait of Mira Saito"
+            }
+          },
+          {
+            "_id": "p-2",
+            "name": "Tom Larsen",
+            "role": "CTO · Copenhagen",
+            "bio": "Built three platforms nobody used. Decided this would be the fourth — except this time with a product manager.",
+            "photo": {
+              "filename": "cb3acf58b57417a4b26474ba04c096af7103c4320ed2f4f3683f79d7670a055c.jpg",
+              "alt": "Portrait of Tom Larsen"
+            }
+          },
+          {
+            "_id": "p-3",
+            "name": "Priya Anand",
+            "role": "Design · Bangalore",
+            "bio": "Owns the interface. Believes type and contrast are 80% of UX. The other 20% is padding.",
+            "photo": {
+              "filename": "75e723ec316de28247924e5dfb73a4b266e10de605e749f150883d280ed8ed16.jpg",
+              "alt": "Portrait of Priya Anand"
+            }
+          },
+          {
+            "_id": "p-4",
+            "name": "Felix Vargas",
+            "role": "Engineering · Mexico City",
+            "bio": "Owns the frontend. Knows how to keep the bundle under 38kb. Won't tell anyone how.",
+            "photo": {
+              "filename": "6167a9164be2cf1183bdfdd4946bf9b908570e79e92a2380c25f0bb702422bbd.jpg",
+              "alt": "Portrait of Felix Vargas"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "testimonials-1",
+      "type": "Testimonials",
+      "data": {
+        "eyebrow": "What teams say",
+        "headline": "## Real teams, *real ship dates.*",
+        "items": [
+          {
+            "_id": "t-1",
+            "quote": "We replaced our CRM in three weeks. Reps chat with customers right inside the app, and the AI handles the easy questions overnight. No tickets, no 'let's bring it up at retro.'",
+            "name": "Lena Park",
+            "role": "Head of Sales · Northwind",
+            "photo": {
+              "filename": "81eba6f5654b8746a9b0cba1a9521a67f2b4afaaefc7c88d66dfab1461270d8f.jpg",
+              "alt": "Portrait of Lena Park"
+            }
+          },
+          {
+            "_id": "t-2",
+            "quote": "A platform our engineers can actually log into and understand. They stopped resenting the tool and started extending it.",
+            "name": "Marcus Weil",
+            "role": "Eng Lead · Avalon",
+            "photo": {
+              "filename": "3e76165a78fd3e7b8ed1e93dee50803ae11110c756c8c1c89229a2dec2bc0abf.jpg",
+              "alt": "Portrait of Marcus Weil"
+            }
+          },
+          {
+            "_id": "t-3",
+            "quote": "It's the first platform where I, the marketer, don't feel like a second-class citizen.",
+            "name": "Sara Okonkwo",
+            "role": "Brand · Plant.io",
+            "photo": {
+              "filename": "27457a1adee2372030d9876b0d52c44d46be98843999935eaef2526b9b961f12.jpg",
+              "alt": "Portrait of Sara Okonkwo"
+            }
+          },
+          {
+            "_id": "t-4",
+            "quote": "Stood up the whole site over a weekend. The agent SDK is genuinely fun to write against.",
+            "name": "Daniel Chen",
+            "role": "Founder · Kettle&Co",
+            "photo": {
+              "filename": "6167a9164be2cf1183bdfdd4946bf9b908570e79e92a2380c25f0bb702422bbd.jpg",
+              "alt": "Portrait of Daniel Chen"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cases-1",
+      "type": "CaseStudies",
+      "data": {
+        "eyebrow": "Case studies",
+        "headline": "## Built with *Servicely.*",
+        "lead": "Three teams that swapped a heavy CRM for a workflow you don't dread opening on Monday.",
+        "items": [
+          {
+            "_id": "case-1",
+            "kind": "D2C · Bakery",
+            "name": "Northwind Bread Co.",
+            "body": "Migrated from a homegrown backend in eighteen days. Marketing now ships seasonal promos without a dedicated engineering sprint.",
+            "metric1Value": "+62%",
+            "metric1Label": "promo velocity",
+            "metric2Value": "-40%",
+            "metric2Label": "eng tickets",
+            "image": {
+              "filename": "82a2ce9e49361098f77a28755779dc5a7c026831cbd135175749c1304e21dacc.jpg",
+              "alt": "Bakery / artisan workshop"
+            }
+          },
+          {
+            "_id": "case-2",
+            "kind": "B2B · Furniture",
+            "name": "Avalon Studio",
+            "body": "Replaced a 'static site + Notion' setup with the visual editor. The catalog now updates itself from the product schema.",
+            "metric1Value": "4.2k",
+            "metric1Label": "pages live",
+            "metric2Value": "38ms",
+            "metric2Label": "p50 TTFB",
+            "image": {
+              "filename": "3b3b90c5084635b746be673ede92a328f002f5621a42c9a5cb89c5e2435652cb.jpg",
+              "alt": "Furniture studio"
+            }
+          },
+          {
+            "_id": "case-3",
+            "kind": "Marketplace",
+            "name": "Plant.io",
+            "body": "Their AI agent writes landing pages in 11 languages. Each one is a real PR a human reviews in ten minutes.",
+            "metric1Value": "11",
+            "metric1Label": "locales",
+            "metric2Value": "96%",
+            "metric2Label": "editor approval",
+            "image": {
+              "filename": "579f67d5fd4c9106c6cdf2ef29f50df934ad0fc2b7849bac1e1cfb1e3f92303b.jpg",
+              "alt": "Farm-to-table marketplace"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "banner-1",
+      "type": "Banner",
+      "data": {
+        "headline": "## Want to see it *in your stack?*",
+        "lead": "A thirty-minute call. We'll stand the template up against your repo while you watch.",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Book a walkthrough"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Or just start building"
+        },
+        "image": {
+          "filename": "",
+          "alt": ""
+        }
+      }
+    }
+  ]
+}

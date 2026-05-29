@@ -1,0 +1,162 @@
+{
+  "slug": "blog",
+  "seo": {
+    "title": "Blog · Servicely™ (demo)",
+    "description": "Demo blog for a made-up platform. Posts cover tools, AI, ops, and why the four-day workweek is still mostly marketing. This is a template, not an actual publication."
+  },
+  "sections": [
+    {
+      "id": "bloghead-1",
+      "type": "BlogIndexHeader",
+      "data": {
+        "eyebrow": "Blog · 47 posts",
+        "headline": "# Notes from the *operations room.*",
+        "lead": "Honest writing about tools, AI, layoffs disguised as 'efficiency reviews,' and why remote work is fine. No SEO bait, no 'ten reasons N1 is the trend of the year.'",
+        "categories": [
+          {
+            "_id": "cat-1",
+            "label": "All"
+          },
+          {
+            "_id": "cat-2",
+            "label": "Engineering"
+          },
+          {
+            "_id": "cat-3",
+            "label": "Editor"
+          },
+          {
+            "_id": "cat-4",
+            "label": "AI"
+          },
+          {
+            "_id": "cat-5",
+            "label": "Customers"
+          },
+          {
+            "_id": "cat-6",
+            "label": "Changelog"
+          }
+        ]
+      }
+    },
+    {
+      "id": "articles-1",
+      "type": "FeaturedArticles",
+      "data": {
+        "eyebrow": "",
+        "headline": "",
+        "lead": "",
+        "columns": "3",
+        "articles": [
+          {
+            "_id": "art-1",
+            "category": "Engineering",
+            "title": "Why we moved schemas next to components",
+            "excerpt": "A short essay on how the JSON-sidecar pattern fell apart in three real codebases.",
+            "meta": "8 min · Tom L. · Apr 28",
+            "link": {
+              "type": "internal",
+              "slug": "article-schemas",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "cae09f4729f8a348b67267c2f2a550be0f3bfa420689afe1a5cf8b7e2b146238.png",
+              "alt": "Warm photograph evoking shipping"
+            }
+          },
+          {
+            "_id": "art-2",
+            "category": "Editor",
+            "title": "The twelve booking forms we refused to ship",
+            "excerpt": "Sticky toolbars, modal overlays, and the publish button that pretends it's a save button.",
+            "meta": "6 min · Mira S. · Apr 21",
+            "link": {
+              "type": "internal",
+              "slug": "article-editor",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "de249ff9be2539cf0d1ce092de3c57001839b6c3e14fcee3fc31a7b7673ae007.jpg",
+              "alt": "Open notebook in warm light"
+            }
+          },
+          {
+            "_id": "art-3",
+            "category": "AI",
+            "title": "Stop generating tickets — generate replies",
+            "excerpt": "When the AI has the schema and a copy of the price list, it stops asking permission. Here's how that works, and why PMs don't get replaced by it.",
+            "meta": "11 min · Tom L. · Apr 14",
+            "link": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "b303185b471678e4d62f678a1549ee26022f4745407d08cae44ecb1c25352293.jpg",
+              "alt": "Person editing on a laptop in warm light"
+            }
+          },
+          {
+            "_id": "art-4",
+            "category": "Engineering",
+            "title": "Edge rendering without the religion",
+            "excerpt": "Cloudflare, Vercel, your own box — all fine. The choice that actually matters is somewhere else.",
+            "meta": "7 min · Felix V. · Apr 7",
+            "link": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "f8b9200065b5436c6a88361839edc2b89be88d3037c84a80d3ee95c32891510b.jpg",
+              "alt": "Laptop on a warm bedspread"
+            }
+          },
+          {
+            "_id": "art-5",
+            "category": "Editor",
+            "title": "Designing for the marketer who hates CMSes",
+            "excerpt": "Most editors are built for editors. Ours is built for the person who logs in once a fortnight and wants out in ten minutes.",
+            "meta": "5 min · Priya A. · Mar 31",
+            "link": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "816a11e6a7245feaf51bbebf09d1bda3f125b334bc24fc3b8f47b5380a7b4294.jpg",
+              "alt": "Warm brainstorm scene"
+            }
+          },
+          {
+            "_id": "art-6",
+            "category": "Customers",
+            "title": "How Plant.io serves 11 locales with one editor",
+            "excerpt": "A workflow case study. Includes the agent prompt template they use — and a list of what they ended up removing from it.",
+            "meta": "9 min · Sara O. · Mar 24",
+            "link": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "579f67d5fd4c9106c6cdf2ef29f50df934ad0fc2b7849bac1e1cfb1e3f92303b.jpg",
+              "alt": "Farm-to-table marketplace photo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "newsletter-1",
+      "type": "Newsletter",
+      "data": {
+        "headline": "## A new post every *Wednesday.*",
+        "emailPlaceholder": "you@company.com",
+        "buttonLabel": "Subscribe",
+        "helperText": "one email a week · unsubscribe in one click"
+      }
+    }
+  ]
+}

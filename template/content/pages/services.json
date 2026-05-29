@@ -1,0 +1,177 @@
+{
+  "slug": "services",
+  "seo": {
+    "title": "Services · Servicely™ (demo)",
+    "description": "Demo services page for the fictional Servicely™ platform. Setup, migration, AI wiring — all fixed-fee, no 'let's loop in procurement.'"
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "Hero",
+      "data": {
+        "eyebrow": "Services",
+        "headline": "# Everything you need to *launch.*",
+        "lead": "From schema design to deploy: a clear menu, fixed scopes, no procurement song-and-dance. This is a demo — the prices below aren't real, we're just rendering the template.",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Talk to us"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/pricing",
+          "label": "See pricing"
+        },
+        "layout": "stacked-center",
+        "background": "paper-2",
+        "image": {
+          "filename": "5e04b46f8317ef95a7ddf85aedfe5c098a755f05056325d0251eccf95ce51172.jpg",
+          "alt": "Laptop on a warm wooden desk in daylight"
+        }
+      }
+    },
+    {
+      "id": "imagetext-1",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "01 · Setup",
+        "headline": "## From signup to *live profile* in five days.",
+        "body": "We mount Servicely™ onto your existing stack — whether that's HubSpot, Airtable, or the Google Sheet your whole team has been living in since 2018.\n\nIncluded: price-list setup, customer import, a preview environment, and a one-hour handover for the team. After the handover we say 'ping us if anything,' and we mean it.",
+        "imagePosition": "left",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "See the setup checklist"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "image": {
+          "filename": "eac45438956be187b010e24b3289757aa00f227c190d49ee99fea510552dd2ba.jpg",
+          "alt": "Warm process photo"
+        }
+      }
+    },
+    {
+      "id": "imagetext-2",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "02 · Migration",
+        "headline": "## Move off your *old CRM,* cleanly.",
+        "body": "Most migrations stall on three things: duplicate customers, the 'misc' field, and tags created by someone who left two years ago. We've done it eleven times.\n\nFixed-fee migration: we move the data, dedupe, and leave you with a green CI on day one. No 'oh, we have another old database we forgot about.'",
+        "imagePosition": "right",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "See migration playbook"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "image": {
+          "filename": "8d7b02ba277ba56bdafdbd47b01f7df6d993c714b4dc2305eb65a1307c09647d.jpg",
+          "alt": "Warm migration / hands-on workshop photo"
+        }
+      }
+    },
+    {
+      "id": "imagetext-3",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "03 · AI workflows",
+        "headline": "## Wire your *AI agent* into the editor.",
+        "body": "Whatever AI assistant your team uses — Claude, ChatGPT, in-house — we wire it to Servicely via API. With a proper action history and a log of who the agent accidentally laid off.\n\nOutput: a working AI that handles bookings, plus the eval harness to keep it from promising a customer a 70% discount.",
+        "imagePosition": "left",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Talk to us"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "image": {
+          "filename": "5b95209269661bb60fb250f1da682e05b9efa64dd42f350608b299e6bf1f2f35.jpg",
+          "alt": "Warm focused work session"
+        }
+      }
+    },
+    {
+      "id": "features-1",
+      "type": "FeatureGrid",
+      "data": {
+        "eyebrow": "How we work",
+        "headline": "## A four-step *engagement.*",
+        "lead": "No discovery deck. No two-week onboarding. Pick a service, we ship.",
+        "columns": "4",
+        "variant": "step",
+        "cards": [
+          {
+            "_id": "s-1",
+            "iconSvg": "",
+            "stat": "01",
+            "label": "Scoping call",
+            "body": "Forty-five minutes. We confirm fit and the fixed price. No pre-sales theatre."
+          },
+          {
+            "_id": "s-2",
+            "iconSvg": "",
+            "stat": "02",
+            "label": "Repo access",
+            "body": "You add us to one repo. We work in branches, like adults."
+          },
+          {
+            "_id": "s-3",
+            "iconSvg": "",
+            "stat": "03",
+            "label": "Build sprint",
+            "body": "5–10 working days. Daily Loom updates, not a 9am standup."
+          },
+          {
+            "_id": "s-4",
+            "iconSvg": "",
+            "stat": "04",
+            "label": "Handover",
+            "body": "One-hour walkthrough. Recorded. Done."
+          }
+        ],
+        "footerCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        }
+      }
+    },
+    {
+      "id": "banner-1",
+      "type": "Banner",
+      "data": {
+        "headline": "## Stop scoping. *Start shipping.*",
+        "lead": "",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Book a 15-min call"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "mailto:founders@servicely.demo",
+          "label": "Email founders@servicely.demo"
+        },
+        "image": {
+          "filename": "",
+          "alt": ""
+        }
+      }
+    }
+  ]
+}

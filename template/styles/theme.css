@@ -1,0 +1,492 @@
+/* ============================================================
+ * agntcms — design tokens. Light theme, warm + monochrome.
+ * Teal is opt-in only.
+ *
+ * The @theme block maps :root tokens onto Tailwind utility names
+ * so utility classes like `bg-paper`, `text-ink`, `border-hairline`,
+ * `bg-bg-primary` all render the bright surface.
+ * ============================================================ */
+
+:root {
+    /* ---------- Color: warm neutrals ---------- */
+    --paper:        #FAF7F2;
+    --paper-2:      #F3EFE8;
+    --paper-3:      #ECE7DE;
+    --hairline:     #E2DCD0;
+    --hairline-2:   #D6CFC0;
+
+    /* ---------- Color: ink ---------- */
+    --ink:          #1A1714;
+    --ink-2:        #3D3833;
+    --ink-3:        #6B635A;
+    --ink-4:        #9A9088;
+
+    /* ---------- Color: brand (opt-in only) ---------- */
+    --teal:         #2DD4BF;
+    --teal-ink:     #0F766E;
+    --teal-tint:    #D6F5EE;
+    --teal-deep:    #134E4A;
+    --caret:        #14B8A6;
+
+    /* ---------- Color: semantic ---------- */
+    --success:      #3F6B4E;
+    --success-tint: #E4EBE2;
+    --warn:         #8C6233;
+    --warn-tint:    #EFE6D7;
+    --danger:       #8B3A3A;
+    --danger-tint:  #EEDADA;
+    --info:         var(--ink-2);
+    --info-tint:    var(--paper-2);
+
+    /* ---------- Foreground / background aliases ---------- */
+    --bg:           var(--paper);
+    --bg-raised:    #FFFFFF;
+    --bg-sunken:    var(--paper-2);
+    --bg-code:      var(--paper-3);
+
+    --fg:           var(--ink);
+    --fg-muted:     var(--ink-2);
+    --fg-subtle:    var(--ink-3);
+    --fg-faint:     var(--ink-4);
+
+    --border:       var(--hairline);
+    --border-strong:var(--hairline-2);
+
+    /* ---------- Type families ---------- */
+    --font-sans:    var(--font-inter-tight, 'Inter Tight'), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono:    var(--font-jetbrains-mono, 'JetBrains Mono'), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --font-display: var(--font-inter-tight, 'Inter Tight'), ui-sans-serif, system-ui, sans-serif;
+
+    /* ---------- Type scale ---------- */
+    --fs-xs:    12px;
+    --fs-sm:    14px;
+    --fs-base:  16px;
+    --fs-md:    18px;
+    --fs-lg:    20px;
+    --fs-xl:    24px;
+    --fs-2xl:   30px;
+    --fs-3xl:   38px;
+    --fs-4xl:   48px;
+    --fs-5xl:   64px;
+    --fs-6xl:   80px;
+
+    /* ---------- Line heights ---------- */
+    --lh-tight:   1.05;
+    --lh-snug:    1.2;
+    --lh-normal:  1.5;
+    --lh-loose:   1.65;
+
+    /* ---------- Letter spacing ---------- */
+    --tracking-tighter: -0.03em;
+    --tracking-tight:   -0.015em;
+    --tracking-normal:  0;
+    --tracking-wide:    0.07em;
+    --tracking-mono:    -0.01em;
+
+    /* ---------- Spacing (4px base) ---------- */
+    --s-0:   0;
+    --s-1:   4px;
+    --s-2:   8px;
+    --s-3:   12px;
+    --s-4:   16px;
+    --s-5:   20px;
+    --s-6:   24px;
+    --s-8:   32px;
+    --s-10:  40px;
+    --s-12:  48px;
+    --s-16:  64px;
+    --s-20:  80px;
+    --s-24:  96px;
+    --s-32:  128px;
+
+    /* ---------- Radii ---------- */
+    --r-xs:  0;
+    --r-sm:  2px;
+    --r-md:  2px;
+    --r-lg:  4px;
+    --r-xl:  4px;
+    --r-2xl: 6px;
+    --r-pill: 999px;
+
+    /* ---------- Shadows (two steps only) ---------- */
+    --shadow-xs: 0 1px 0 0 rgba(26, 23, 20, 0.04);
+    --shadow-sm: 0 1px 2px 0 rgba(26, 23, 20, 0.06), 0 1px 1px 0 rgba(26, 23, 20, 0.04);
+    --shadow-md: var(--shadow-sm);
+    --shadow-lg: var(--shadow-sm);
+    --shadow-xl: var(--shadow-sm);
+    --shadow-teal: 0 0 0 4px rgba(45, 212, 191, 0.18);
+
+    /* ---------- Motion ---------- */
+    --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out:cubic-bezier(0.65, 0, 0.35, 1);
+    --dur-fast:   120ms;
+    --dur-base:   200ms;
+    --dur-slow:   320ms;
+
+    /* ---------- Layout ---------- */
+    --container-narrow: 720px;
+    --container:        1080px;
+    --container-wide:   1280px;
+}
+
+@theme {
+    /* ================================================================
+       FONT FAMILY — map Tailwind utilities onto bundle tokens.
+       The `--font-inter`, `--font-jetbrains-mono` CSS variables come
+       from `next/font` in app/layout.tsx (Inter Tight is loaded via
+       next/font as Inter for variable parity; both faces resolve to
+       Inter Tight on the body class). The bundle's `--font-display`
+       and `--font-sans` are both Inter Tight.
+       ================================================================ */
+    --font-body: var(--font-inter-tight, 'Inter Tight'), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: var(--font-inter-tight, 'Inter Tight'), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    --font-essay: var(--font-source-serif, 'Source Serif 4'), Newsreader, Georgia, serif;
+
+    /* ================================================================
+       FONT SIZE — bundle-driven scale exposed as Tailwind text-* tokens.
+       ================================================================ */
+    --text-xs: var(--fs-xs);
+    --text-xs--line-height: 1.5;
+    --text-sm: var(--fs-sm);
+    --text-sm--line-height: 1.5;
+    --text-md: var(--fs-md);
+    --text-md--line-height: 1.65;
+    --text-lg: var(--fs-lg);
+    --text-lg--line-height: 1.55;
+    --text-xl: var(--fs-xl);
+    --text-xl--line-height: 1.4;
+
+    --text-display-xs: var(--fs-2xl);
+    --text-display-xs--line-height: 1.2;
+    --text-display-sm: var(--fs-3xl);
+    --text-display-sm--line-height: 1.15;
+    --text-display-md: var(--fs-4xl);
+    --text-display-md--line-height: 1.1;
+    --text-display-md--letter-spacing: -0.02em;
+    --text-display-lg: var(--fs-5xl);
+    --text-display-lg--line-height: 1.05;
+    --text-display-lg--letter-spacing: -0.03em;
+    --text-display-xl: var(--fs-6xl);
+    --text-display-xl--line-height: 1.05;
+    --text-display-xl--letter-spacing: -0.03em;
+    --text-display-2xl: 96px;
+    --text-display-2xl--line-height: 1.05;
+    --text-display-2xl--letter-spacing: -0.03em;
+
+    /* ================================================================
+       LAYOUT
+       ================================================================ */
+    --max-width-container: var(--container-wide);
+    --max-width-container-narrow: var(--container-narrow);
+    --max-width-container-default: var(--container);
+    --max-width-container-wide: var(--container-wide);
+
+    --breakpoint-xxs: 320px;
+    --breakpoint-xs: 600px;
+
+    /* ================================================================
+       RADIUS
+       ================================================================ */
+    --radius-none: 0px;
+    --radius-xs: var(--r-xs);
+    --radius-sm: var(--r-sm);
+    --radius-DEFAULT: var(--r-md);
+    --radius-md: var(--r-md);
+    --radius-lg: var(--r-lg);
+    --radius-xl: var(--r-xl);
+    --radius-2xl: var(--r-2xl);
+    --radius-3xl: 8px;
+    --radius-full: var(--r-pill);
+
+    /* ================================================================
+       SHADOW
+       ================================================================ */
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-sm);
+    --shadow-lg: var(--shadow-sm);
+    --shadow-xl: var(--shadow-sm);
+
+    /* ================================================================
+       ANIMATIONS
+       ================================================================ */
+    --animate-marquee: marquee 60s linear infinite;
+    --animate-caret-blink: caret-blink 1.1s steps(2) infinite;
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    @keyframes caret-blink {
+        50% { opacity: 0; }
+    }
+
+    /* ================================================================
+       BASE COLORS — bundle tokens exposed as Tailwind utilities.
+       ================================================================ */
+    --color-transparent: rgb(0 0 0 / 0);
+    --color-white: rgb(255 255 255);
+    --color-black: rgb(0 0 0);
+
+    /* Bundle-native palette utilities */
+    --color-paper: var(--paper);
+    --color-paper-2: var(--paper-2);
+    --color-paper-3: var(--paper-3);
+    --color-hairline: var(--hairline);
+    --color-hairline-2: var(--hairline-2);
+    --color-ink: var(--ink);
+    --color-ink-2: var(--ink-2);
+    --color-ink-3: var(--ink-3);
+    --color-ink-4: var(--ink-4);
+    --color-teal: var(--teal);
+    --color-teal-ink: var(--teal-ink);
+    --color-teal-tint: var(--teal-tint);
+    --color-teal-deep: var(--teal-deep);
+    --color-caret: var(--caret);
+
+    /* Semantic earth tones */
+    --color-success-tint: var(--success-tint);
+    --color-warn: var(--warn);
+    --color-warn-tint: var(--warn-tint);
+    --color-danger: var(--danger);
+    --color-danger-tint: var(--danger-tint);
+
+    /* ================================================================
+       SEMANTIC TOKENS — wired to bundle palette.
+       Existing utility classes (text-text-primary, bg-bg-primary,
+       border-border-primary, etc.) continue to work but now render
+       with the bright paper/ink scheme.
+       ================================================================ */
+
+    /* TEXT */
+    --color-text-white: #FFFFFF;
+    --color-text-primary: var(--ink);
+    --color-text-secondary: var(--ink-2);
+    --color-text-secondary_hover: var(--ink);
+    --color-text-tertiary: var(--ink-3);
+    --color-text-tertiary_hover: var(--ink-2);
+    --color-text-quaternary: var(--ink-4);
+    --color-text-disabled: var(--ink-4);
+    --color-text-placeholder: var(--ink-4);
+    --color-text-placeholder_subtle: var(--ink-4);
+    --color-text-primary_on-brand: var(--paper);
+    --color-text-secondary_on-brand: var(--paper-2);
+    --color-text-tertiary_on-brand: var(--paper-2);
+    --color-text-quaternary_on-brand: var(--paper-2);
+    --color-text-brand-primary: var(--teal-ink);
+    --color-text-brand-secondary: var(--teal-deep);
+    --color-text-brand-secondary_hover: var(--teal-ink);
+    --color-text-brand-tertiary: var(--teal-ink);
+    --color-text-brand-tertiary_alt: var(--ink);
+    --color-text-error-primary: var(--danger);
+    --color-text-error-primary_hover: var(--danger);
+    --color-text-warning-primary: var(--warn);
+    --color-text-success-primary: var(--success);
+
+    /* BORDERS */
+    --color-border-primary: var(--hairline);
+    --color-border-secondary: var(--hairline);
+    --color-border-secondary_alt: var(--hairline);
+    --color-border-tertiary: var(--hairline-2);
+    --color-border-error: var(--danger);
+    --color-border-error_subtle: var(--danger);
+    --color-border-disabled: var(--hairline);
+    --color-border-disabled_subtle: var(--hairline);
+    --color-border-brand: var(--ink);
+    --color-border-brand_alt: var(--ink-2);
+
+    /* FOREGROUND (icons, decorative) */
+    --color-fg-white: #FFFFFF;
+    --color-fg-primary: var(--ink);
+    --color-fg-secondary: var(--ink-2);
+    --color-fg-secondary_hover: var(--ink);
+    --color-fg-tertiary: var(--ink-3);
+    --color-fg-tertiary_hover: var(--ink-2);
+    --color-fg-quaternary: var(--ink-4);
+    --color-fg-quaternary_hover: var(--ink-3);
+    --color-fg-error-primary: var(--danger);
+    --color-fg-error-secondary: var(--danger);
+    --color-fg-success-primary: var(--success);
+    --color-fg-success-secondary: var(--success);
+    --color-fg-warning-primary: var(--warn);
+    --color-fg-warning-secondary: var(--warn);
+    --color-fg-disabled: var(--ink-4);
+    --color-fg-disabled_subtle: var(--ink-4);
+    --color-fg-brand-primary: var(--teal-ink);
+    --color-fg-brand-primary_alt: var(--teal-ink);
+    --color-fg-brand-secondary: var(--teal-deep);
+    --color-fg-brand-secondary_alt: var(--ink-2);
+    --color-fg-brand-secondary_hover: var(--ink);
+
+    /* BACKGROUND */
+    --color-bg-primary: var(--paper);
+    --color-bg-primary-solid: var(--paper);
+    --color-bg-primary_alt: var(--paper);
+    --color-bg-primary_hover: var(--paper-2);
+    --color-bg-secondary: var(--paper-2);
+    --color-bg-secondary-solid: var(--paper-2);
+    --color-bg-secondary_subtle: var(--paper-2);
+    --color-bg-secondary_hover: var(--paper-3);
+    --color-bg-secondary_alt: var(--paper-2);
+    --color-bg-tertiary: var(--paper-3);
+    --color-bg-quaternary: var(--paper-3);
+    --color-bg-error-primary: var(--danger-tint);
+    --color-bg-error-secondary: var(--danger-tint);
+    --color-bg-error-solid: var(--danger);
+    --color-bg-error-solid_hover: var(--danger);
+    --color-bg-warning-primary: var(--warn-tint);
+    --color-bg-warning-secondary: var(--warn-tint);
+    --color-bg-warning-solid: var(--warn);
+    --color-bg-success-primary: var(--success-tint);
+    --color-bg-success-secondary: var(--success-tint);
+    --color-bg-success-solid: var(--success);
+    --color-bg-disabled: var(--paper-2);
+    --color-bg-disabled_subtle: var(--paper-2);
+    --color-bg-active: var(--paper-2);
+    --color-bg-overlay: rgba(26, 23, 20, 0.5);
+    --color-bg-brand-primary: var(--teal-tint);
+    --color-bg-brand-primary_alt: var(--paper-2);
+    --color-bg-brand-secondary: var(--teal-tint);
+    --color-bg-brand-solid: var(--ink);
+    --color-bg-brand-solid_hover: var(--ink-2);
+    --color-bg-brand-section: var(--ink);
+    --color-bg-brand-section_subtle: var(--paper-2);
+
+    /* INK / inverted surfaces — banner-style sections render dark
+     * even on this bright theme. */
+    --color-bg-ink: var(--ink);
+    --color-bg-ink-2: var(--ink-2);
+
+    /* FOCUS RING */
+    --color-focus-ring: var(--ink);
+    --color-focus-ring-error: var(--danger);
+
+    /* ================================================================
+       COMPONENT-SPECIFIC COLORS — mapped to ink scheme.
+       ================================================================ */
+    --color-avatar-bg: var(--paper-3);
+    --color-avatar-contrast-border: rgba(26, 23, 20, 0.08);
+    --color-avatar-profile-photo-border: var(--paper);
+    --color-avatar-styles-bg-neutral: var(--paper-3);
+    --color-button-destructive-primary-icon: var(--danger);
+    --color-button-destructive-primary-icon_hover: var(--danger);
+    --color-button-primary-icon: var(--paper);
+    --color-button-primary-icon_hover: var(--paper);
+    --color-featured-icon-light-fg-brand: var(--teal-ink);
+    --color-featured-icon-light-fg-error: var(--danger);
+    --color-featured-icon-light-fg-gray: var(--ink-3);
+    --color-featured-icon-light-fg-success: var(--success);
+    --color-featured-icon-light-fg-warning: var(--warn);
+    --color-icon-fg-brand: var(--teal-ink);
+    --color-icon-fg-brand_on-brand: var(--paper);
+    --color-toggle-border: var(--hairline);
+    --color-toggle-button-fg_disabled: var(--ink-4);
+    --color-toggle-slim-border_pressed-hover: var(--color-transparent);
+    --color-toggle-slim-border_pressed: var(--color-transparent);
+    --color-tooltip-supporting-text: var(--ink-3);
+    --color-text-editor-icon-fg: var(--ink-3);
+    --color-text-editor-icon-fg_active: var(--ink);
+
+    /* ================================================================
+       PROPERTY ALIASES — background-color-*
+       ================================================================ */
+    --background-color-primary: var(--color-bg-primary);
+    --background-color-primary-solid: var(--color-bg-primary-solid);
+    --background-color-primary_alt: var(--color-bg-primary_alt);
+    --background-color-primary_hover: var(--color-bg-primary_hover);
+    --background-color-secondary: var(--color-bg-secondary);
+    --background-color-secondary-solid: var(--color-bg-secondary-solid);
+    --background-color-secondary_alt: var(--color-bg-secondary_alt);
+    --background-color-secondary_hover: var(--color-bg-secondary_hover);
+    --background-color-secondary_subtle: var(--color-bg-secondary_subtle);
+    --background-color-tertiary: var(--color-bg-tertiary);
+    --background-color-quaternary: var(--color-bg-quaternary);
+    --background-color-active: var(--color-bg-active);
+    --background-color-disabled: var(--color-bg-disabled);
+    --background-color-disabled_subtle: var(--color-bg-disabled_subtle);
+    --background-color-overlay: var(--color-bg-overlay);
+    --background-color-brand-primary: var(--color-bg-brand-primary);
+    --background-color-brand-primary_alt: var(--color-bg-brand-primary_alt);
+    --background-color-brand-secondary: var(--color-bg-brand-secondary);
+    --background-color-brand-solid: var(--color-bg-brand-solid);
+    --background-color-brand-solid_hover: var(--color-bg-brand-solid_hover);
+    --background-color-brand-section: var(--color-bg-brand-section);
+    --background-color-brand-section_subtle: var(--color-bg-brand-section_subtle);
+    --background-color-error-primary: var(--color-bg-error-primary);
+    --background-color-error-secondary: var(--color-bg-error-secondary);
+    --background-color-error-solid: var(--color-bg-error-solid);
+    --background-color-error-solid_hover: var(--color-bg-error-solid_hover);
+    --background-color-warning-primary: var(--color-bg-warning-primary);
+    --background-color-warning-secondary: var(--color-bg-warning-secondary);
+    --background-color-warning-solid: var(--color-bg-warning-solid);
+    --background-color-success-primary: var(--color-bg-success-primary);
+    --background-color-success-secondary: var(--color-bg-success-secondary);
+    --background-color-success-solid: var(--color-bg-success-solid);
+    --background-color-border-tertiary: var(--color-border-tertiary);
+    --background-color-border-brand: var(--color-border-brand);
+    --background-color-border-brand_alt: var(--color-border-brand_alt);
+
+    /* ================================================================
+       PROPERTY ALIASES — text-color-*
+       ================================================================ */
+    --text-color-primary: var(--color-text-primary);
+    --text-color-primary_on-brand: var(--color-text-primary_on-brand);
+    --text-color-secondary: var(--color-text-secondary);
+    --text-color-secondary_hover: var(--color-text-secondary_hover);
+    --text-color-secondary_on-brand: var(--color-text-secondary_on-brand);
+    --text-color-tertiary: var(--color-text-tertiary);
+    --text-color-tertiary_hover: var(--color-text-tertiary_hover);
+    --text-color-tertiary_on-brand: var(--color-text-tertiary_on-brand);
+    --text-color-quaternary: var(--color-text-quaternary);
+    --text-color-quaternary_on-brand: var(--color-text-quaternary_on-brand);
+    --text-color-disabled: var(--color-text-disabled);
+    --text-color-placeholder: var(--color-text-placeholder);
+    --text-color-placeholder_subtle: var(--color-text-placeholder_subtle);
+    --text-color-brand-primary: var(--color-text-brand-primary);
+    --text-color-brand-secondary: var(--color-text-brand-secondary);
+    --text-color-brand-secondary_hover: var(--color-text-brand-secondary_hover);
+    --text-color-brand-tertiary: var(--color-text-brand-tertiary);
+    --text-color-brand-tertiary_alt: var(--color-text-brand-tertiary_alt);
+    --text-color-error-primary: var(--color-text-error-primary);
+    --text-color-error-primary_hover: var(--color-text-error-primary_hover);
+    --text-color-warning-primary: var(--color-text-warning-primary);
+    --text-color-success-primary: var(--color-text-success-primary);
+    --text-color-tooltip-supporting-text: var(--color-tooltip-supporting-text);
+
+    /* ================================================================
+       PROPERTY ALIASES — border-color-*
+       ================================================================ */
+    --border-color-primary: var(--color-border-primary);
+    --border-color-secondary: var(--color-border-secondary);
+    --border-color-secondary_alt: var(--color-border-secondary_alt);
+    --border-color-tertiary: var(--color-border-tertiary);
+    --border-color-disabled: var(--color-border-disabled);
+    --border-color-disabled_subtle: var(--color-border-disabled_subtle);
+    --border-color-error: var(--color-border-error);
+    --border-color-error_subtle: var(--color-border-error_subtle);
+    --border-color-brand: var(--color-border-brand);
+    --border-color-brand_alt: var(--color-border-brand_alt);
+    --border-color-brand-solid: var(--color-bg-brand-solid);
+    --border-color-brand-solid_hover: var(--color-bg-brand-solid_hover);
+
+    /* ================================================================
+       PROPERTY ALIASES — ring / outline
+       ================================================================ */
+    --ring-color-primary: var(--color-border-primary);
+    --ring-color-secondary: var(--color-border-secondary);
+    --ring-color-secondary_alt: var(--color-border-secondary_alt);
+    --ring-color-tertiary: var(--color-border-tertiary);
+    --ring-color-error: var(--color-border-error);
+    --ring-color-disabled: var(--color-border-disabled);
+    --ring-color-brand: var(--color-border-brand);
+    --ring-color-brand-solid: var(--color-bg-brand-solid);
+    --ring-color-brand_alt: var(--color-border-brand_alt);
+    --outline-color-primary: var(--color-border-primary);
+    --outline-color-secondary: var(--color-border-secondary);
+    --outline-color-tertiary: var(--color-border-tertiary);
+    --outline-color-error: var(--color-border-error);
+    --outline-color-brand: var(--color-border-brand);
+    --outline-color-brand-solid: var(--color-bg-brand-solid);
+    --outline-color-brand_alt: var(--color-border-brand_alt);
+}

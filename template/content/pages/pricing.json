@@ -1,0 +1,219 @@
+{
+  "slug": "pricing",
+  "seo": {
+    "title": "Pricing · Servicely™ (demo)",
+    "description": "Demo pricing page. The prices are fictional, just like the company. This is a template — handy for showing a SaaS plan layout."
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "Hero",
+      "data": {
+        "eyebrow": "Pricing",
+        "headline": "# Pricing made *simple.*",
+        "lead": "One number per plan. No quotes, no add-ons, no enterprise tier hidden behind a contact form. (The numbers below are made up too — this is a demo.)",
+        "primaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "layout": "stacked-center",
+        "background": "paper-2",
+        "image": {
+          "filename": "",
+          "alt": ""
+        }
+      }
+    },
+    {
+      "id": "plans-1",
+      "type": "PricingPlans",
+      "data": {
+        "plans": [
+          {
+            "_id": "plan-solo",
+            "name": "Solo",
+            "price": "$0",
+            "priceSub": "/ month",
+            "featured": false,
+            "pitch": "For one person on one project. Free forever — or until investors change their minds.",
+            "features": [
+              {
+                "_id": "f-1",
+                "item": "1 project"
+              },
+              {
+                "_id": "f-2",
+                "item": "1 editor seat"
+              },
+              {
+                "_id": "f-3",
+                "item": "10k bookings / month"
+              },
+              {
+                "_id": "f-4",
+                "item": "Community support"
+              }
+            ],
+            "cta": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Start free"
+            }
+          },
+          {
+            "_id": "plan-team",
+            "name": "Team",
+            "price": "$49",
+            "priceSub": "/ editor / month",
+            "featured": true,
+            "pitch": "For teams that ship every day. Branch previews, role-based access, an AI agent.",
+            "features": [
+              {
+                "_id": "f-1",
+                "item": "Unlimited projects"
+              },
+              {
+                "_id": "f-2",
+                "item": "Unlimited editor seats"
+              },
+              {
+                "_id": "f-3",
+                "item": "500k bookings / month"
+              },
+              {
+                "_id": "f-4",
+                "item": "Branch previews & PR flow"
+              },
+              {
+                "_id": "f-5",
+                "item": "AI agent SDK"
+              },
+              {
+                "_id": "f-6",
+                "item": "Email support, 24h SLA"
+              }
+            ],
+            "cta": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Start 14-day trial"
+            }
+          },
+          {
+            "_id": "plan-studio",
+            "name": "Studio",
+            "price": "$199",
+            "priceSub": "/ editor / month",
+            "featured": false,
+            "pitch": "For agencies and platform teams running many client sites at once.",
+            "features": [
+              {
+                "_id": "f-1",
+                "item": "Everything in Team"
+              },
+              {
+                "_id": "f-2",
+                "item": "White-label editor"
+              },
+              {
+                "_id": "f-3",
+                "item": "Custom roles & SSO"
+              },
+              {
+                "_id": "f-4",
+                "item": "Multi-tenant billing"
+              },
+              {
+                "_id": "f-5",
+                "item": "Priority support, 4h SLA"
+              },
+              {
+                "_id": "f-6",
+                "item": "Quarterly roadmap call"
+              }
+            ],
+            "cta": {
+              "type": "internal",
+              "slug": "/contact",
+              "label": "Talk to us"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "faq-1",
+      "type": "FAQ",
+      "data": {
+        "eyebrow": "FAQ",
+        "headline": "## Questions, asked *honestly.*",
+        "lead": "",
+        "entries": [
+          {
+            "_id": "q-1",
+            "question": "What counts as an editor seat?",
+            "answer": "Anyone who logs into the editor and works with bookings. Developers reading via the API don't count. AI agents don't count (yet)."
+          },
+          {
+            "_id": "q-2",
+            "question": "Is there a free trial of Team?",
+            "answer": "Yes — 14 days, no card required. You can keep using Solo indefinitely if Team isn't the right fit."
+          },
+          {
+            "_id": "q-3",
+            "question": "Can I self-host?",
+            "answer": "The runtime, yes — MIT-licensed. The visual editor is a hosted service for now. Self-host for Studio is on the roadmap, and this time we'll actually ship it."
+          },
+          {
+            "_id": "q-4",
+            "question": "How does AI billing work?",
+            "answer": "You bring your own API key (Anthropic, OpenAI, in-house). Servicely doesn't mark up tokens or charge per generation. You pay exactly what your provider charges."
+          },
+          {
+            "_id": "q-5",
+            "question": "Do you do annual discounts?",
+            "answer": "Yes — pay annually, get two months free. No haggling, same number for everyone. (We don't have a sales team to haggle with anyway.)"
+          },
+          {
+            "_id": "q-6",
+            "question": "What if I outgrow 500k bookings?",
+            "answer": "You stay on Team and pay $0.20 per additional 1k bookings. We email you the day you cross — no 'surprise' invoice at month-end."
+          },
+          {
+            "_id": "q-7",
+            "question": "Can I cancel anytime?",
+            "answer": "Yes. No multi-year contracts, no clawback clauses. Your data exports cleanly to JSON in one click."
+          }
+        ]
+      }
+    },
+    {
+      "id": "banner-1",
+      "type": "Banner",
+      "data": {
+        "headline": "## Still unsure? *Talk to a human.*",
+        "lead": "No SDR queue. You'll get a founder on the call. With a bit of luck, the founder's dog.",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/contact",
+          "label": "Book a 15-min call"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Or start free"
+        },
+        "image": {
+          "filename": "",
+          "alt": ""
+        }
+      }
+    }
+  ]
+}

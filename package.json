@@ -1,0 +1,37 @@
+{
+  "name": "agntcms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Two-process framework for Next.js where Claude Code is a first-class user alongside the human editor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agntcms/agntcms.git"
+  },
+  "homepage": "https://github.com/agntcms/agntcms#readme",
+  "bugs": {
+    "url": "https://github.com/agntcms/agntcms/issues"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "vitest run --passWithNoTests",
+    "template:dev": "turbo run dev --filter=agntcms-template...",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.5",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp"]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "contact",
+  "seo": {
+    "title": "Contact · Servicely™ (demo)",
+    "description": "Demo contact page for the fictional Servicely™ platform. The form is rendered, but nobody is at the other end — this is a template, not a real company."
+  },
+  "sections": [
+    {
+      "id": "form-1",
+      "type": "ContactForm",
+      "data": {
+        "headline": "## Get in touch with the *team.*",
+        "body": "A founder reads every message. Expect a real reply within one working day — usually the same day if it's before 6pm CET. (Being honest: this is a demo site, so the messages won't actually go anywhere — but that's exactly how the real form would behave.)",
+        "nameLabel": "Your name",
+        "emailLabel": "Email",
+        "companyLabel": "Company (optional)",
+        "messageLabel": "What are you working on?",
+        "submitLabel": "Send message",
+        "quote": "The team replied in two hours, on a Sunday. Their CEO debugged my schema bug live on a call. Try getting that from the big platforms.",
+        "quoteName": "Marcus Weil",
+        "quoteRole": "Eng Lead · Avalon",
+        "quotePhoto": {
+          "filename": "3e76165a78fd3e7b8ed1e93dee50803ae11110c756c8c1c89229a2dec2bc0abf.jpg",
+          "alt": ""
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "site-footer",
+  "type": "SiteFooter",
+  "data": {
+    "brandName": "Servicely™ · demo",
+    "showCaret": true,
+    "tagline": "This is a demo site. Servicely™ isn't a real platform — the content here is for showcasing the agntcms template.",
+    "columns": [
+      {
+        "_id": "col-product",
+        "heading": "Product",
+        "links": [
+          { "_id": "l-1", "label": "Overview", "link": { "type": "internal", "slug": "/", "label": "Overview" } },
+          { "_id": "l-2", "label": "Pricing", "link": { "type": "internal", "slug": "/pricing", "label": "Pricing" } },
+          { "_id": "l-3", "label": "Changelog", "link": { "type": "internal", "slug": "/", "label": "Changelog" } },
+          { "_id": "l-4", "label": "Roadmap", "link": { "type": "internal", "slug": "/", "label": "Roadmap" } }
+        ]
+      },
+      {
+        "_id": "col-docs",
+        "heading": "Docs",
+        "links": [
+          { "_id": "l-1", "label": "Quickstart", "link": { "type": "internal", "slug": "/", "label": "Quickstart" } },
+          { "_id": "l-2", "label": "Editor", "link": { "type": "internal", "slug": "/", "label": "Editor" } },
+          { "_id": "l-3", "label": "CLI reference", "link": { "type": "internal", "slug": "/", "label": "CLI reference" } },
+          { "_id": "l-4", "label": "Hosting", "link": { "type": "internal", "slug": "/", "label": "Hosting" } }
+        ]
+      },
+      {
+        "_id": "col-company",
+        "heading": "Company",
+        "links": [
+          { "_id": "l-1", "label": "About", "link": { "type": "internal", "slug": "/about", "label": "About" } },
+          { "_id": "l-2", "label": "Blog", "link": { "type": "internal", "slug": "/blog", "label": "Blog" } },
+          { "_id": "l-3", "label": "Contact", "link": { "type": "internal", "slug": "/contact", "label": "Contact" } },
+          { "_id": "l-4", "label": "Security", "link": { "type": "internal", "slug": "/", "label": "Security" } }
+        ]
+      },
+      {
+        "_id": "col-legal",
+        "heading": "Legal",
+        "links": [
+          { "_id": "l-1", "label": "Terms", "link": { "type": "internal", "slug": "/", "label": "Terms" } },
+          { "_id": "l-2", "label": "Privacy", "link": { "type": "internal", "slug": "/", "label": "Privacy" } },
+          { "_id": "l-3", "label": "DPA", "link": { "type": "internal", "slug": "/", "label": "DPA" } },
+          { "_id": "l-4", "label": "License", "link": { "type": "internal", "slug": "/", "label": "License" } }
+        ]
+      }
+    ],
+    "copyright": "© 2026 Servicely™ · this is a demo, not a real service",
+    "versionLine": "v0.0.1-demo · all systems nominal (because there aren't any)"
+  }
+}

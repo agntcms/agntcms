@@ -1,0 +1,13 @@
+{
+  "name": "site-meta",
+  "type": "SiteMeta",
+  "data": {
+    "siteName": "Servicely™ · demo",
+    "baseUrl": "https://servicely.demo",
+    "defaultOgImage": {
+      "filename": "placeholder.png",
+      "alt": "Servicely™ — a demo platform for selling any service"
+    },
+    "defaultDescription": "Demo site for the fictional Servicely™ platform — a service that sells any service. This is an agntcms template, not a real company."
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "slug": "home",
+  "seo": {
+    "title": "Servicely™ — we sell anything (demo site)",
+    "description": "Demo template for the fictional Servicely™ platform — a service that sells any service. This site is not a real company; it's the demo content shipped with the agntcms template."
+  },
+  "sections": [
+    {
+      "id": "hero-1",
+      "type": "Hero",
+      "data": {
+        "eyebrow": "Demo template · Servicely™ · v0.0.1-demo",
+        "headline": "# We sell anything. *Including your service.*",
+        "lead": "A platform for people who sell services — from dog-walking to AGI rollouts. We don't ask questions. You have a service, we have an intake form. Done. (Heads up: Servicely™ isn't a real company — this is a demo site.)",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Try it (free forever)"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Watch the 90-second tour"
+        },
+        "layout": "split",
+        "background": "paper",
+        "image": {
+          "filename": "b69b49169c11546100d6dd5280073bc0d84cbbcc6d33fa01ecf6a5866fa42237.jpg",
+          "alt": "Laptop on a warm wooden desk under daylight"
+        }
+      }
+    },
+    {
+      "id": "tabs-1",
+      "type": "TabbedFeatures",
+      "data": {
+        "eyebrow": "Why Servicely",
+        "headline": "## Three reasons to *stop worrying.*",
+        "lead": "If your competitor is already on Servicely — well, we did warn you. If they aren't yet, congratulations: about a quarter and a half of runway.",
+        "entries": [
+          {
+            "_id": "tab-1",
+            "headline": "Any service, one platform",
+            "description": "Dog grooming, tax advice, courses on how to sell courses about selling courses. We don't ask what you sell — we hand you an intake form, a price list, and a checkout button. The rest is on you.",
+            "cta": {
+              "type": "internal",
+              "slug": "/",
+              "label": "See categories"
+            },
+            "image": {
+              "filename": "d5a0701b2d156284e0ce851cd2534ec632db34f91fbcbee3b8a7784d45ce78d2.jpg",
+              "alt": "Hands typing on a keyboard in warm light"
+            }
+          },
+          {
+            "_id": "tab-2",
+            "headline": "Bookings come to you",
+            "description": "Customer hits a button. You get a Telegram ping. No CRM with forty-seven fields, no pipeline where leads drown at the 'qualification' stage. The lead is just a real message from a real human.",
+            "cta": {
+              "type": "internal",
+              "slug": "/",
+              "label": "How bookings work"
+            },
+            "image": {
+              "filename": "d6ef1c3f48b0e488521794fb60701da1fd2c3a1621d6ac5f17ccfd4909d3be60.jpg",
+              "alt": "Sunlit studio with notebook and laptop"
+            }
+          },
+          {
+            "_id": "tab-3",
+            "headline": "AI is somewhere inside",
+            "description": "There's AI in here. We're not entirely sure where, but it's definitely in there — otherwise how would we close the next round? It answers easy customer questions while you sleep.",
+            "cta": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Try the AI assistant"
+            },
+            "image": {
+              "filename": "3855d91192f0c6120b01427b78ef84e52baa9f4b5a17d4271e41c1bfd95a5b0c.jpg",
+              "alt": "Two people pair-working at a warm desk"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "features-1",
+      "type": "FeatureGrid",
+      "data": {
+        "eyebrow": "What's inside",
+        "headline": "## Everything you need. *Nothing you don't.*",
+        "lead": "",
+        "columns": "3",
+        "variant": "icon",
+        "cards": [
+          {
+            "_id": "card-1",
+            "iconSvg": "<svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18M9 21V9\"/></svg>",
+            "stat": "",
+            "label": "Dashboard",
+            "body": "Login, password, dark mode. Like a normal app. No 'ask your account manager to send you an invite link.'"
+          },
+          {
+            "_id": "card-2",
+            "iconSvg": "<svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><path d=\"M8 6l-6 6 6 6M16 6l6 6-6 6\"/></svg>",
+            "stat": "",
+            "label": "Price list",
+            "body": "From zero to infinity. Decimal point works. You can say 'starting at' or 'on request' — we'll cope."
+          },
+          {
+            "_id": "card-3",
+            "iconSvg": "<svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18\"/></svg>",
+            "stat": "",
+            "label": "Analytics",
+            "body": "The graph goes up. If it doesn't, we'll ask design to flip the axis. (Joke. Mostly.)"
+          }
+        ],
+        "footerCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "See all features"
+        }
+      }
+    },
+    {
+      "id": "imagetext-1",
+      "type": "ImageText",
+      "data": {
+        "eyebrow": "Real workflow",
+        "headline": "## Launch in a day, *not a quarter.*",
+        "body": "Sign-up is thirty seconds. Profile setup is ten minutes. First booking lands somewhere between 'today' and 'when the algorithm decides.'\n\nNo Salesforce integration. No 'let's pick this up next sprint.' No 'an account executive will reach out within three business days.' Use the time you saved on the four-day week that's allegedly coming any year now.",
+        "imagePosition": "left",
+        "background": "paper",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Read a customer story"
+        },
+        "secondaryCta": {
+          "type": "external",
+          "url": "",
+          "label": ""
+        },
+        "image": {
+          "filename": "0d0475f21aa96435a8ed3cdb2fddcc6278492e76ae842f569432454f4d33631a.jpg",
+          "alt": "Coffee cup beside a workbook on a warm desk"
+        }
+      }
+    },
+    {
+      "id": "newsletter-1",
+      "type": "Newsletter",
+      "data": {
+        "headline": "## One email a month. *No filler.*",
+        "emailPlaceholder": "you@company.com",
+        "buttonLabel": "Subscribe",
+        "helperText": "one email a month · unsubscribe in one click"
+      }
+    },
+    {
+      "id": "articles-1",
+      "type": "FeaturedArticles",
+      "data": {
+        "eyebrow": "From the blog",
+        "headline": "## Notes from the *operations room.*",
+        "lead": "Honest writing about tools, AI, layoffs disguised as 'efficiency reviews,' and why the four-day week is still mostly marketing.",
+        "columns": "3",
+        "articles": [
+          {
+            "_id": "art-1",
+            "category": "Engineering",
+            "title": "Why we moved schemas next to components",
+            "excerpt": "A short essay on how the JSON-sidecar pattern fell apart in three real codebases.",
+            "meta": "8 min · Tom L.",
+            "link": {
+              "type": "internal",
+              "slug": "article-schemas",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "cae09f4729f8a348b67267c2f2a550be0f3bfa420689afe1a5cf8b7e2b146238.png",
+              "alt": "Warm photograph evoking shipping"
+            }
+          },
+          {
+            "_id": "art-2",
+            "category": "Editor",
+            "title": "The twelve booking forms we refused to ship",
+            "excerpt": "Sticky toolbars, modal overlays, and the publish button that pretends it's a save button.",
+            "meta": "6 min · Mira S.",
+            "link": {
+              "type": "internal",
+              "slug": "article-editor",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "de249ff9be2539cf0d1ce092de3c57001839b6c3e14fcee3fc31a7b7673ae007.jpg",
+              "alt": "Open notebook in warm light"
+            }
+          },
+          {
+            "_id": "art-3",
+            "category": "AI",
+            "title": "Our AI replied to the customer — the customer didn't notice yet",
+            "excerpt": "When the AI has the schema and a copy of the price list, it stops asking permission. Here's how that works.",
+            "meta": "11 min · Tom L.",
+            "link": {
+              "type": "internal",
+              "slug": "/",
+              "label": "Read article"
+            },
+            "image": {
+              "filename": "b303185b471678e4d62f678a1549ee26022f4745407d08cae44ecb1c25352293.jpg",
+              "alt": "Person editing on a laptop in warm light"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "banner-1",
+      "type": "Banner",
+      "data": {
+        "headline": "## Stop deliberating. *Start selling.*",
+        "lead": "Two minutes to a working profile. No discovery calls. No 'let's loop in the whole growth team.'",
+        "primaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Start free"
+        },
+        "secondaryCta": {
+          "type": "internal",
+          "slug": "/",
+          "label": "Book a walkthrough"
+        },
+        "image": {
+          "filename": "d6ef1c3f48b0e488521794fb60701da1fd2c3a1621d6ac5f17ccfd4909d3be60.jpg",
+          "alt": "Sunlit studio with workspace"
+        }
+      }
+    }
+  ]
+}

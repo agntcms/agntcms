@@ -1,0 +1,40 @@
+{
+  "name": "create-agntcms-app",
+  "version": "0.5.5",
+  "description": "create-agntcms-app: scaffold a new agntcms project from the canonical template",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agntcms/agntcms.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/agntcms/agntcms#readme",
+  "bugs": {
+    "url": "https://github.com/agntcms/agntcms/issues"
+  },
+  "type": "module",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "bin": {
+    "create-agntcms-app": "./dist/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agntcms/skills": "workspace:*",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
