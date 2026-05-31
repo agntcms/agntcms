@@ -29,6 +29,7 @@ import {
 } from 'react'
 import type { ButtonValue, SelectOption } from '../../domain/index'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 import { ButtonSubForm } from './ButtonSubForm'
 
 export interface ButtonPickerModalProps {
@@ -45,7 +46,7 @@ export interface ButtonPickerModalProps {
   /** Current value, used to seed the inputs on open. */
   readonly initialValue?: ButtonValue
   /**
-   * Stacking override. Defaults to 100000 — same plane as
+   * Stacking override. Defaults to `Z_FIELD_EDITOR` — same plane as
    * VideoPickerModal / ImagePickerModal.
    */
   readonly zIndex?: number
@@ -82,7 +83,7 @@ interface ButtonPickerModalBodyProps {
 function ButtonPickerModalBody(
   props: ButtonPickerModalBodyProps,
 ): ReactElement {
-  const { onClose, onInsert, variants, initialValue, zIndex = 100000 } = props
+  const { onClose, onInsert, variants, initialValue, zIndex = Z_FIELD_EDITOR } = props
 
   // Seed the draft from `initialValue`, falling back to a sensible
   // blank: empty label, first variant (or '' for an empty list — same

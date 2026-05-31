@@ -23,6 +23,7 @@ import type { LinkValue } from '../../domain/index'
 import { normalizeLinkValue } from '../../domain/index'
 import type { EditableSlot } from '../../sections/index'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 import type { PreviewFieldLike } from './isPreviewField'
 import { isPreviewField } from './isPreviewField'
 import { LinkSubForm, validateLinkForSave } from './LinkSubForm'
@@ -145,7 +146,7 @@ function EditableLinkPreview(props: EditableLinkPreviewProps): React.ReactElemen
         title={<h2 style={titleStyle}>Edit link</h2>}
         maxWidth={480}
         maxHeight="auto"
-        zIndex={100000}
+        zIndex={Z_FIELD_EDITOR}
         footer={
           <>
             <button

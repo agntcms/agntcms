@@ -5,7 +5,7 @@
 // flows (modal Save, list reorder) are exercised through pnpm template:dev
 // during the smoke pass.
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import type { ButtonValue, LinkValue } from '../../domain/index'
 import {
   validateEmail,
@@ -24,7 +24,7 @@ import { EditableList } from './EditableList'
 import { EditableNumber, shouldCommit } from './EditableNumber'
 import { EditableSelect } from './EditableSelect'
 import { ItemFormEditor, buildBlankItem, isModalEligible } from './ItemFormEditor'
-import { validateLinkForSave } from './LinkSubForm'
+import { LinkSubForm, validateLinkForSave } from './LinkSubForm'
 
 interface TestElement {
   type: unknown
@@ -34,6 +34,45 @@ interface TestElement {
 
 function asTestElement(el: React.ReactElement): TestElement {
   return el as unknown as TestElement
+}
+
+/**
+ * Depth-first search of a React element tree for the first element whose
+ * `type` matches `target`. Returns the raw element node or `undefined`.
+ *
+ * `ItemFormEditor` dispatches each field through an internal
+ * `ItemFieldControl` function component, so the link control does not
+ * appear as a `LinkSubForm` element until that component runs. To reach
+ * it without jsdom we INVOKE any function-typed element encountered
+ * during the walk (passing its props) and recurse into the result —
+ * same no-render style as the rest of this file, just one hop deeper.
+ * Invocation is guarded so a throwing component (e.g. one that calls
+ * hooks) is skipped rather than failing the whole walk.
+ */
+function findElementByType(node: unknown, target: unknown): unknown {
+  if (node === null || typeof node !== 'object') return undefined
+  if (Array.isArray(node)) {
+    for (const child of node) {
+      const hit = findElementByType(child, target)
+      if (hit !== undefined) return hit
+    }
+    return undefined
+  }
+  const el = node as { type?: unknown; props?: Record<string, unknown> }
+  if (el.type === target) return el
+  if (typeof el.type === 'function') {
+    try {
+      const rendered = (el.type as (p: unknown) => unknown)(el.props ?? {})
+      const hit = findElementByType(rendered, target)
+      if (hit !== undefined) return hit
+    } catch {
+      // Component needs a render context we don't have — skip it.
+    }
+  }
+  if (el.props !== undefined) {
+    return findElementByType(el.props['children'], target)
+  }
+  return undefined
 }
 
 function makePreviewField<T>(value: T): PreviewFieldLike<T> {
@@ -1164,8 +1203,8 @@ describe('EditableList modal — save semantics', () => {
 // ---------------------------------------------------------------------------
 // isModalEligible — policy split between inline and modal field kinds.
 //
-// Inline-only (returns false): text, richText, image, link, list.
-// Modal-only  (returns true):  number, boolean, select, video, reference.
+// Inline-only (returns false): text, richText, image, list.
+// Modal-only  (returns true):  link, number, boolean, select, video, reference.
 //
 // Note: `boolean` returns TRUE even though the framework has an inline
 // `<EditableBoolean>` widget. The split here is editorial POLICY — boolean
@@ -1177,13 +1216,18 @@ describe('isModalEligible — inline vs modal policy', () => {
     expect(isModalEligible({ kind: 'text' })).toBe(false)
     expect(isModalEligible({ kind: 'richText' })).toBe(false)
     expect(isModalEligible({ kind: 'image' })).toBe(false)
-    expect(isModalEligible({ kind: 'link' })).toBe(false)
     expect(
       isModalEligible({ kind: 'list', itemSchema: { name: { kind: 'text' } } }),
     ).toBe(false)
   })
 
   it('returns true for modal-only kinds', () => {
+    // `link` is modal-eligible: its editable surface is a destination
+    // (slug/url/email/phone), not a visible text node. A list pattern
+    // that renders the visible text through a separate `text` field and
+    // uses the link only for its href would otherwise leave the link
+    // unreachable. See INLINE_EDITABLE_KINDS in ItemFormEditor.tsx.
+    expect(isModalEligible({ kind: 'link' })).toBe(true)
     expect(isModalEligible({ kind: 'number' })).toBe(true)
     // Boolean is modal-eligible by policy even though an inline editor
     // exists — it's a setting, not editorial content.
@@ -1231,7 +1275,12 @@ describe('ItemFormEditor — inlineEditableHidden', () => {
       .filter((k): k is string => typeof k === 'string')
   }
 
-  it('with inlineEditableHidden=true, only the boolean field renders', () => {
+  it('with inlineEditableHidden=true, the modal-eligible link and boolean fields render', () => {
+    // `cta` (a link) is modal-eligible: its editable surface is a
+    // destination, not a visible text node, so it is reached through the
+    // ✎ modal rather than inline on the card. `included` (boolean) is
+    // modal-eligible by editorial policy. The inline-only text/richText/
+    // image fields are filtered out.
     const el = ItemFormEditor({
       schema: mixedSchema,
       value: {
@@ -1246,7 +1295,7 @@ describe('ItemFormEditor — inlineEditableHidden', () => {
       inlineEditableHidden: true,
     })
     const names = rowFieldNames(el)
-    expect(names).toEqual(['included'])
+    expect(names).toEqual(['cta', 'included'])
   })
 
   it('with inlineEditableHidden=false (default), every field renders', () => {
@@ -1264,6 +1313,51 @@ describe('ItemFormEditor — inlineEditableHidden', () => {
     })
     const names = rowFieldNames(el)
     expect(names).toEqual(['title', 'body', 'icon', 'cta', 'included'])
+  })
+
+  it('renders a LinkSubForm control for a link subfield and commits link edits to the draft', () => {
+    // Regression: a list-item `link` subfield (e.g. SiteHeader navItems
+    // `{ label, link }`) used to be classified inline-only, so the ✎
+    // modal filtered it out and — when the author rendered only the
+    // sibling `label` inline — the link became uneditable. With `link`
+    // modal-eligible, the ✎ modal renders the shared `<LinkSubForm>` and
+    // edits commit back into the item draft.
+    const onChange = vi.fn()
+    const schema = {
+      label: { kind: 'text' },
+      link: { kind: 'link' },
+    } as unknown as Parameters<typeof ItemFormEditor>[0]['schema']
+    const value = {
+      _id: 'n1',
+      label: 'Docs',
+      link: { type: 'internal', slug: 'docs', label: 'Docs' },
+    } as unknown as Parameters<typeof ItemFormEditor>[0]['value']
+    const el = ItemFormEditor({
+      schema,
+      value,
+      onChange,
+      inlineEditableHidden: true,
+    })
+
+    // The link field is the only one the ✎ modal exposes here (label is
+    // inline-only). Find the LinkSubForm element anywhere in the tree and
+    // drive its onChange — that is the exact callback the modal wires for
+    // a link control.
+    const subForm = findElementByType(el, LinkSubForm)
+    expect(subForm).not.toBeUndefined()
+    const props = (subForm as { props: Record<string, unknown> }).props
+    // The sub-form is seeded with the current normalised link value.
+    expect((props['value'] as LinkValue).type).toBe('internal')
+    const change = props['onChange'] as (next: LinkValue) => void
+    const next: LinkValue = { type: 'external', url: 'https://x.test', label: 'Docs' }
+    change(next)
+
+    // The control's onChange must commit the patched item (label kept,
+    // link replaced) — proving the link edit reaches the draft.
+    expect(onChange).toHaveBeenCalledTimes(1)
+    const committed = onChange.mock.calls[0]?.[0] as Record<string, unknown>
+    expect(committed['label']).toBe('Docs')
+    expect(committed['link']).toEqual(next)
   })
 
   it('shows an empty-state caption when filtering removes every field', () => {

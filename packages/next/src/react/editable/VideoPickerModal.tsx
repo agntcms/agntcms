@@ -38,6 +38,7 @@ import {
 import type { VideoValue } from '../../domain/index'
 import { parseVideoUrl } from '../../domain/video'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 
 // Aspect-ratio options surfaced in the picker. Mirrors the closed
 // `VideoValue['aspectRatio']` union plus an "Auto" entry that maps to
@@ -66,7 +67,7 @@ export interface VideoPickerModalProps {
   /** Current value, used to seed the URL + ratio inputs on open. */
   readonly initialValue?: VideoValue
   /**
-   * Stacking override. Defaults to 100000 — same plane as
+   * Stacking override. Defaults to `Z_FIELD_EDITOR` — same plane as
    * ImagePickerModal / MarkdownEditorModal. Callers that mount this
    * picker on top of another modal should pass a higher value so the
    * shared document-level Escape handler dismisses only the topmost
@@ -104,7 +105,7 @@ interface VideoPickerModalBodyProps {
 function VideoPickerModalBody(
   props: VideoPickerModalBodyProps,
 ): ReactElement {
-  const { onClose, onInsert, initialValue, zIndex = 100000 } = props
+  const { onClose, onInsert, initialValue, zIndex = Z_FIELD_EDITOR } = props
 
   const [url, setUrl] = useState<string>(initialValue?.url ?? '')
   // Empty string represents the "Auto" choice (= absent aspectRatio).

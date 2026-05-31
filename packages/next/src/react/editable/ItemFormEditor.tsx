@@ -118,14 +118,28 @@ export interface ItemFormEditorProps {
 
 /**
  * Inline-eligible kinds — visible editorial content edited on the card
- * itself via the wrapped PreviewItem. These five are the canonical
+ * itself via the wrapped PreviewItem. These four are the canonical
  * "what the reader sees" fields.
+ *
+ * Why `link` is NOT here (it used to be):
+ *   A link's editable surface is its DESTINATION (slug / url / email /
+ *   phone), which is configuration, not a visible text node. The only
+ *   inline affordance `<EditableLink>` offers is a clickable label span
+ *   — but the common list pattern (nav menus, footers) renders the
+ *   visible text through a SEPARATE `text` field (`label`) and uses the
+ *   link solely via `read(item.link)` to compute an href. In that
+ *   pattern the link has no inline surface at all, so classifying it
+ *   inline-only left it UNEDITABLE: the ✎ modal filtered it out and the
+ *   card never rendered an `<EditableLink>` for it. Treating `link` as
+ *   modal-eligible routes it through this file's `<LinkSubForm>` (same
+ *   sub-form `<EditableLink>` uses), restoring editability. Authors who
+ *   DO render `<EditableLink field={item.link}>` inline still get the
+ *   inline path — the modal entry is purely additive.
  */
 const INLINE_EDITABLE_KINDS: ReadonlySet<FieldDescriptor['kind']> = new Set([
   'text',
   'richText',
   'image',
-  'link',
   'list',
 ])
 
@@ -157,8 +171,8 @@ const FORM_EXCLUDED_KINDS: ReadonlySet<FieldDescriptor['kind']> = new Set([
  * — those fields are edited on the rendered card.
  *
  * Policy (not capability):
- *   FALSE (= inline-only): text, richText, image, link, list
- *   TRUE  (= modal-only):  number, boolean, select, video, reference
+ *   FALSE (= inline-only): text, richText, image, list
+ *   TRUE  (= modal-only):  link, number, boolean, select, video, reference
  *
  * Even though `boolean` (and others) have inline editor components,
  * authors should NOT use them inside a list item's `renderItem` — the

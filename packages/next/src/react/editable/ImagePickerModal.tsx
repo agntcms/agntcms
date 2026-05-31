@@ -40,6 +40,7 @@ import {
 } from 'react'
 import type { ImageValue } from '../../domain/index'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -68,10 +69,11 @@ export interface ImagePickerModalProps {
    *  picks the same filename they already have. Also used when no other
    *  source of alt is available. */
   readonly initialValue?: ImageValue
-  /** Stacking override. Defaults to 100000 — same plane as
+  /** Stacking override. Defaults to `Z_FIELD_EDITOR` — same plane as
    *  MarkdownEditorModal. Callers that mount this picker on top of another
-   *  modal should pass a higher value so the shared document-level Escape
-   *  handler dismisses only the topmost modal instead of both at once. */
+   *  modal should pass a higher value (e.g. `Z_FIELD_EDITOR_PICKER`) so the
+   *  shared document-level Escape handler dismisses only the topmost modal
+   *  instead of both at once. */
   readonly zIndex?: number
 }
 
@@ -123,7 +125,7 @@ type PickerMode =
 function ImagePickerModalBody(
   props: ImagePickerModalBodyProps,
 ): ReactElement {
-  const { onClose, onInsert, initialValue, zIndex = 100000 } = props
+  const { onClose, onInsert, initialValue, zIndex = Z_FIELD_EDITOR } = props
 
   const [assets, setAssets] = useState<readonly PickerAsset[]>([])
   const [loading, setLoading] = useState(true)

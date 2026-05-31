@@ -36,4 +36,5 @@ Thumbs.db
 .env.*.local
 
 # Claude agent memory (local state, not checked in)
-.claude/agent-memory/
+# Match at any depth — agents under packages/*/.claude/ keep their own memory.
+**/.claude/agent-memory/

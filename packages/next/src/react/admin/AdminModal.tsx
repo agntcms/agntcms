@@ -21,6 +21,7 @@ import {
 } from 'react'
 
 import { Modal } from '../shared/Modal'
+import { Z_ADMIN_SUBMODAL } from '../shared/zLayers'
 import { SectionRenderer } from '../SectionRenderer'
 import type { SectionRendererProps } from '../SectionRenderer'
 import { SaveProvider } from '../editable/SaveContext'
@@ -1713,6 +1714,11 @@ export function AdminModal(props: AdminModalProps): ReactElement | null {
               setEditingGlobal(null)
               fetchGlobals()
             }}
+            // Per-field inline saves refresh the outer list (draft badge)
+            // but keep the editor open — see GlobalEditModalProps.onInlineSaved.
+            onInlineSaved={() => {
+              fetchGlobals()
+            }}
             {...(definitions !== undefined ? { definitions } : {})}
             {...(entry !== undefined ? { initialType: entry.type } : {})}
             {...(entry?.hasDraft === true ? { initialHasDraft: true } : {})}
@@ -2811,7 +2817,19 @@ interface GlobalEditModalProps {
   readonly name: string
   readonly open: boolean
   readonly onClose: () => void
+  /**
+   * Called after a successful save from the bottom Save button (fallback
+   * generic-field form). Closes the modal AND refreshes the outer list.
+   */
   readonly onSaved: () => void
+  /**
+   * Called after a successful per-field INLINE save (inline section-component
+   * mode). Refreshes the outer list (so the draft badge appears) but MUST
+   * NOT close the modal — the user is still mid-edit. Conflating this with
+   * `onSaved` made the host modal unmount on the first inline list mutation
+   * (e.g. "+ Add item"), which read as the modal "closing" on add.
+   */
+  readonly onInlineSaved: () => void
   /**
    * When provided and the global's `type` matches a registered definition,
    * the modal renders the actual section component with inline editable
@@ -2906,7 +2924,8 @@ export function wrapGlobalData(
 }
 
 function GlobalEditModal(props: GlobalEditModalProps): ReactElement | null {
-  const { name, open, onClose, onSaved, definitions, initialType, initialHasDraft } = props
+  const { name, open, onClose, onSaved, onInlineSaved, definitions, initialType, initialHasDraft } =
+    props
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -2977,9 +2996,13 @@ function GlobalEditModal(props: GlobalEditModalProps): ReactElement | null {
 
   // Inline-field save for the section-component render path. Mirrors the
   // `globalRef` branch in preview/SectionEditControls.tsx: patch the named
-  // field locally, POST the full global, then call onSaved so the outer
-  // list refreshes and the modal closes. Edits happen per-field, matching
-  // page-section UX — no explicit Save button needed.
+  // field locally, POST the full global, then refresh the outer list via
+  // `onInlineSaved`. Edits happen per-field, matching page-section UX — no
+  // explicit Save button needed. CRITICAL: this calls `onInlineSaved`, NOT
+  // `onSaved` — `onSaved` closes the modal, and per-field inline saves must
+  // keep the editor open (the user is still editing). Using `onSaved` here
+  // unmounted the host on the first list mutation (e.g. "+ Add item"), which
+  // looked like the modal closing instead of adding an item.
   const saveFieldInline = useCallback<SaveFieldFn>(
     (origin, newValue) => {
       const updated = { ...fields, [origin.fieldPath]: newValue }
@@ -3000,14 +3023,14 @@ function GlobalEditModal(props: GlobalEditModalProps): ReactElement | null {
             void res.text().then((t) => alert(`Failed to save global: ${t}`))
             return
           }
-          onSaved()
+          onInlineSaved()
         })
         .catch(() => {
           // eslint-disable-next-line no-restricted-globals
           alert('Failed to save global.')
         })
     },
-    [fields, name, globalType, onSaved],
+    [fields, name, globalType, onInlineSaved],
   )
 
   // Decide rendering mode: inline section-component editing requires
@@ -3058,7 +3081,10 @@ function GlobalEditModal(props: GlobalEditModalProps): ReactElement | null {
       title={<span style={metaTitleStyle}>Edit global</span>}
       footer={footer}
       ariaLabel="Edit global"
-      zIndex={100001}
+      // Named constant (not a bare 100001) so the zLayers regression test
+      // guards the runtime field-editor-above-host relationship: field
+      // editors (Z_FIELD_EDITOR) must paint above this host.
+      zIndex={Z_ADMIN_SUBMODAL}
       maxWidth={inlineMode ? 960 : 520}
     >
       {loading ? (

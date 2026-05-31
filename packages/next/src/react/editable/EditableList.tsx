@@ -10,7 +10,7 @@
 // ✎ / ↑ / ↓ / × affordances on hover or focus. The ✎ button is rendered
 // ONLY when the item schema declares at least one modal-eligible field
 // (`hasModalEligibleFields`); for schemas whose every field is
-// inline-eligible (text/richText/image/link/list), the ✎ button is
+// inline-eligible (text/richText/image/list), the ✎ button is
 // suppressed because the modal would have nothing to show. A trailing
 // "+ Add item" placeholder appends a blank item directly with descriptor
 // defaults; the user edits inline first, then opens ✎ to set meta
@@ -24,9 +24,13 @@
 // `PreviewFieldLike<…>` augmented with an inline-save closure (see
 // `wrapItemForPreview`); in published mode, the slot's `value` is the
 // bare data (see `wrapItemAsSlot`). Visible editorial fields
-// (text/richText/image/link/list) are edited inline. Meta/technical
-// fields (number/boolean/select/video/reference) are reached only
+// (text/richText/image/list) are edited inline. Meta/technical
+// fields (link/number/boolean/select/video/reference) are reached only
 // through the ✎ modal so the preview surface stays free of form chrome.
+// (`link` is modal-eligible because its editable surface is a
+// destination, not a visible text node — see ItemFormEditor's
+// INLINE_EDITABLE_KINDS comment; an author may still render an inline
+// `<EditableLink>` and that path keeps working.)
 // See `wrapItemForPreview.ts` and `ItemFormEditor.isModalEligible` for
 // the policy.
 //
@@ -57,6 +61,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import type { ListItem, SectionSchema } from '../../domain/index'
 import type { EditableSlot, SlotItem } from '../../sections/index'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 import { ItemFormEditor, buildBlankItem, isModalEligible } from './ItemFormEditor'
 import type { PreviewFieldLike } from './isPreviewField'
 import { isPreviewField } from './isPreviewField'
@@ -374,9 +379,10 @@ function EditableListPreview<S extends SectionSchema>(
           title={<h2 style={MODAL_TITLE_STYLE}>Edit item fields</h2>}
           // ItemFormEditor can grow tall; give the form room.
           maxWidth={720}
-          // Opened from the preview overlay (PreviewToolbar z-index 99999),
-          // so the modal must be above it.
-          zIndex={100000}
+          // Opened from the preview overlay (PreviewToolbar z-index 99999)
+          // OR from inside the AdminModal "Edit global" host (100001), so
+          // the item editor must sit on the field-editor layer above both.
+          zIndex={Z_FIELD_EDITOR}
           ariaLabel="Edit item fields"
           footer={
             <>

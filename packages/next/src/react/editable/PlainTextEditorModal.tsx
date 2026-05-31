@@ -24,6 +24,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR } from '../shared/zLayers'
 
 export interface PlainTextEditorModalProps {
   readonly value: string
@@ -126,7 +127,7 @@ export function PlainTextEditorModal(props: PlainTextEditorModalProps): React.Re
         onClose={onCancel}
         title={titleNode}
         ariaLabel={`Edit ${fieldPath}`}
-        zIndex={100000}
+        zIndex={Z_FIELD_EDITOR}
         contentPadding={0}
         footer={footerNode}
       >

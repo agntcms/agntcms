@@ -4,8 +4,9 @@
 //
 // Internal component, NOT exported from barrels. Only imported by
 // EditableText. Uses the shared Modal shell (../shared/Modal) for
-// overlay/panel/header/close/escape/backdrop mechanics. z-index 100000
-// so it sits above PreviewToolbar (99999).
+// overlay/panel/header/close/escape/backdrop mechanics. z-index
+// `Z_FIELD_EDITOR` (see ../shared/zLayers) so it sits above both
+// PreviewToolbar (99999) and the AdminModal "Edit global" host (100001).
 //
 // Pre-v0.5 the toolbar carried a sparkle button that dispatched a
 // text_edit MCP task to the local agent. The channel was removed in v0.5
@@ -23,6 +24,7 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 
 import type { ImageValue } from '../../domain/index'
 import { Modal } from '../shared/Modal'
+import { Z_FIELD_EDITOR, Z_FIELD_EDITOR_PICKER } from '../shared/zLayers'
 import { escapeMarkdownAlt } from './escapeMarkdownAlt'
 import { ImagePickerModal } from './ImagePickerModal'
 import type { PreviewFieldOriginLike } from './isPreviewField'
@@ -361,7 +363,7 @@ export function MarkdownEditorModal(props: MarkdownEditorModalProps): React.Reac
         onClose={onCancel}
         title={titleNode}
         ariaLabel={`Edit ${fieldPath}`}
-        zIndex={100000}
+        zIndex={Z_FIELD_EDITOR}
         contentPadding={0}
         footer={footerNode}
       >
@@ -620,14 +622,14 @@ export function MarkdownEditorModal(props: MarkdownEditorModalProps): React.Reac
           </div>
         </div>
       </Modal>
-      {/* zIndex 100002 sits above the editor (100000). Single satellite
-          modal today; the explicit ordering keeps it well-formed if more
-          are added in the future. */}
+      {/* Z_FIELD_EDITOR_PICKER sits one rung above the editor
+          (Z_FIELD_EDITOR). Single satellite modal today; the explicit
+          ordering keeps it well-formed if more are added in the future. */}
       <ImagePickerModal
         open={imagePickerOpen}
         onClose={handleImagePickerClose}
         onInsert={handleImagePickerInsert}
-        zIndex={100002}
+        zIndex={Z_FIELD_EDITOR_PICKER}
       />
     </>
   )

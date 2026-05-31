@@ -23,10 +23,16 @@
 //   Every field on a wrapped item is now an `EditableSlot<K, V>` whose
 //   `slot.value` carries one of:
 //     - bare V          (non-inline-editable kinds: number, select, video)
-//     - PreviewFieldLike<V>  (inline-editable kinds: text, richText,
-//                             image, link, boolean, button — slot.value
-//                             is augmented with `onSave` so the inline
-//                             save closure flows through)
+//     - PreviewFieldLike<V>  (kinds that CAN be edited inline: text,
+//                             richText, image, link, boolean, button —
+//                             slot.value is augmented with `onSave` so
+//                             the inline save closure flows through. Note
+//                             `link` keeps its inline closure so an author
+//                             who renders `<EditableLink field={item.x}>`
+//                             inline still saves, even though `link` is
+//                             classified modal-eligible in ItemFormEditor
+//                             — the two are independent: capability here,
+//                             editorial policy there.)
 //     - PreviewFieldLike<ReadonlyArray<ListItem<NS>>>   (nested list —
 //                             slot.value carries the RAW nested array
 //                             plus origin/onSave for add/remove/reorder
