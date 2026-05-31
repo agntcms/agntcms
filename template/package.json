@@ -1,6 +1,6 @@
 {
   "name": "agntcms-template",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Reference Next.js project used by create-agntcms-app. Not published to npm.",
   "private": true,
   "scripts": {

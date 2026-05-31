@@ -1,6 +1,6 @@
 {
   "name": "@agntcms/skills",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Claude Code skills, the source of truth for the agntcms project layout",
   "license": "MIT",
   "repository": {
