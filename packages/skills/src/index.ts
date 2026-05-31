@@ -30,10 +30,10 @@ export interface SkillModule {
 
 export const agntcmsSkills: ReadonlyArray<SkillModule> = [
   {
-    name: 'agntcms-init',
-    description: 'Wipes the agntcms demo, acquires the Claude Design bundle, migrates tokens, then creates and registers any missing section types and builds every content page present in the bundle (home plus blog index, docs, contact, etc.) with copy lifted verbatim from the mocks. Templates for dynamic routes are reported separately.',
-    slug: 'init',
-    path: 'skills/init/SKILL.md',
+    name: 'agntcms-init-from-artifact',
+    description: 'Migrate an existing app generated from a Claude artifact (real source code + CSS) into an agntcms project, reusing the source styles and markup verbatim and wrapping them in the content model; screenshots used only to verify.',
+    slug: 'init-from-artifact',
+    path: 'skills/init-from-artifact/SKILL.md',
   },
   {
     name: 'agntcms-structure',

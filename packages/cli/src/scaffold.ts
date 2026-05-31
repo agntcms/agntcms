@@ -407,7 +407,7 @@ To configure your project:
 
 Optional — use Claude Code as a developer assistant:
   - Run \`claude\` in the project directory to open Claude Code.
-  - Run /agntcms-init to walk through interview-driven project personalization.
+  - Run /agntcms-init-from-artifact to migrate an existing app generated from a Claude artifact into this project.
   - The .claude/skills/ directory contains developer skills for working with agntcms.
 `)
 }

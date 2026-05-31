@@ -1,9 +1,9 @@
 # agntcms — Brand Guide
 
 This is the brand and design guide for the demo content shipped with
-this template. When `/agntcms-init` runs against a real Claude Design
-bundle, this file is rewritten to point at that bundle. Until then,
-these rules describe the in-tree demo.
+this template. When `/agntcms-init-from-artifact` runs against an app
+generated from a Claude artifact, this file is rewritten to point at
+that source project. Until then, these rules describe the in-tree demo.
 
 ## Source of truth
 
