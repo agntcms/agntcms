@@ -95,8 +95,9 @@ Rules:
 `app/layout.tsx` is in the frozen zone and cannot be edited directly. However, adding a
 `<GlobalSlot>` call for a newly created global IS an expected user-zone change because
 `app/layout.tsx` is **not** frozen — only the files under `app/api/agntcms/`,
-`app/[[...slug]]/page.tsx`, and `app/admin/` are frozen (see `agntcms-structure` and
-`agntcms-frozen-guard`). `app/layout.tsx` is user-editable.
+`app/[[...slug]]/page.tsx`, `app/not-found.tsx`, `.claude/settings.json`, and
+`.claude/skills/` are frozen (see `agntcms-structure` and `agntcms-frozen-guard`).
+`app/layout.tsx` is user-editable.
 
 To wire a global in `app/layout.tsx`:
 
@@ -221,8 +222,9 @@ in v1.
 
 ## The `site-meta` global
 
-`site-meta` is a framework-managed global that holds SEO defaults consumed by the frozen
-metadata helpers, sitemap, and robots.txt. Content file: `content/globals/site-meta.json`.
+`site-meta` is a framework-managed global that holds SEO defaults consumed by the metadata
+helpers in `app/[[...slug]]/page.tsx`, `app/layout.tsx`, `app/sitemap.ts`, and
+`app/robots.ts`. Content file: `content/globals/site-meta.json`.
 
 `SiteMeta` is registered with `system: true` in `agntcms/sections/SiteMeta/index.ts`. This
 hides it from the section picker and the user-globals list in the admin Globals tab, and

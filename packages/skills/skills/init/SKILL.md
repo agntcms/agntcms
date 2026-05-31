@@ -64,9 +64,10 @@ wait for an explicit "yes" before continuing.
 ## What this skill does NOT do
 
 - Does not modify frozen-zone files. The frozen zone is:
-  `app/api/agntcms/`, `app/admin/`, `app/[[...slug]]/page.tsx`, `app/not-found.tsx`,
-  `app/sitemap.ts`, `app/robots.ts`, `.claude/`, `.claude-plugin/`, `.mcp.json`.
+  `app/api/agntcms/`, `app/[[...slug]]/page.tsx`, `app/not-found.tsx`,
+  `.claude/settings.json`, `.claude/skills/`.
   If any step appears to require touching these, stop and report a framework constraint.
+  (`app/sitemap.ts` and `app/robots.ts` are user-editable defaults, not frozen.)
 
 - Does not run `pnpm dev`, `pnpm build`, `pnpm test`, or commit to git.
 
@@ -531,8 +532,8 @@ Confirm all of the following before reporting done:
    entries both gone.
 2. `BRAND.md` contains `design/<bundle-name>/`.
 3. None of the frozen-zone files were modified during this run:
-   `app/api/agntcms/`, `app/admin/`, `app/[[...slug]]/page.tsx`, `app/not-found.tsx`,
-   `app/sitemap.ts`, `app/robots.ts`, `.claude/`, `.claude-plugin/`, `.mcp.json`.
+   `app/api/agntcms/`, `app/[[...slug]]/page.tsx`, `app/not-found.tsx`,
+   `.claude/settings.json`, `.claude/skills/`.
 4. `design/<bundle-name>/README.md` exists at the recorded path, and
    `design/<bundle-name>/project/` exists.
 5. `agntcms/config.ts` registry symmetry: import count equals `sections: [...]` entry count.
@@ -600,9 +601,12 @@ Next steps:
 
 ## Key rules
 
-1. **Frozen zone is immutable.** The paths listed above may not be modified. `app/layout.tsx`
-   is user zone (announcement removal is fine); everything else in `app/` that is frozen stays
-   untouched.
+1. **Frozen zone is immutable.** The canonical frozen paths (`app/api/agntcms/`,
+   `app/[[...slug]]/page.tsx`, `app/not-found.tsx`, `.claude/settings.json`,
+   `.claude/skills/`) may not be modified. `app/layout.tsx` is user zone (announcement
+   removal is fine). `app/sitemap.ts` and `app/robots.ts` are user-editable defaults —
+   they may be touched if the task genuinely requires it, but their defaults are correct
+   for most projects and rarely need changing during init.
 
 2. **Section registration is two lines.** Adding or removing a section means touching both
    the `import` line and the `sections: [...]` array entry. One without the other is an error.

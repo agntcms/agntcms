@@ -76,8 +76,15 @@ Skills are a gate, not a suggestion. No action without a skill check first.
 ## Project zones
 
 **Frozen zone** — framework-owned, do not modify:
-`app/api/agntcms/`, `app/[[...slug]]/`, `app/not-found.tsx`, `app/sitemap.ts`,
-`app/robots.ts`, `.claude/`
+`app/api/agntcms/`, `app/[[...slug]]/page.tsx`, `app/not-found.tsx`,
+`.claude/settings.json`, `.claude/skills/`
+
+**User-editable defaults** — ship as working defaults, customize freely:
+`app/sitemap.ts` (sitemap generator — reads site-meta + listPages),
+`app/robots.ts` (robots.txt generator — reads site-meta for base URL)
+
+Note: `.claude/launch.json` is a per-developer harness file (Claude Code preview/dev-server
+launch config) — it is NOT frozen and is gitignored.
 
 **User zone** — section definitions and framework config:
 `agntcms/config.ts`, `agntcms/sections/`

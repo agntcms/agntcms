@@ -1,3 +1,11 @@
 packages:
   - 'packages/*'
   - 'template'
+
+# Build-script approval is a workspace-root setting in pnpm 10+ (it is ignored
+# in a member package.json). sharp ships a native postinstall build that Next.js
+# image optimization relies on; without this approval pnpm skips it and the
+# deps check exits non-zero. Scaffolded standalone projects get the same setting
+# written into their own pnpm-workspace.yaml by create-agntcms-app.
+allowBuilds:
+  sharp: true

@@ -18,11 +18,12 @@ alongside `pnpm dev`; agent-driven features are dev-time only and are absent in 
 
 ```
 <project-root>/
-├── app/                                 # FROZEN — do not edit
-│   ├── [[...slug]]/page.tsx             # catch-all page proxy for all content pages
-│   ├── sitemap.ts                       # XML sitemap — reads site-meta and listPages
-│   ├── robots.ts                        # robots.txt — reads site-meta for sitemap URL
-│   └── api/agntcms/                   # framework route-handler proxies
+├── app/
+│   ├── [[...slug]]/page.tsx             # FROZEN — catch-all page proxy for all content pages
+│   ├── not-found.tsx                    # FROZEN — framework not-found route (renders CMS 404 page)
+│   ├── sitemap.ts                       # user-editable default — reads site-meta and listPages; customize freely
+│   ├── robots.ts                        # user-editable default — reads site-meta for sitemap URL; customize freely
+│   └── api/agntcms/                     # FROZEN — framework route-handler proxies
 │       │   # Files with .dev.ts extension are excluded from the prod build by the
 │       │   # pageExtensions hook in withagntcms. Only route.ts (no .dev) runs in prod.
 │       ├── _shared.ts                   # module-level singletons (runtime, bridge, task store)
@@ -48,9 +49,10 @@ alongside `pnpm dev`; agent-driven features are dev-time only and are absent in 
 ├── public/
 │   └── assets/                          # uploaded assets (content-addressable by SHA-256 hash)
 │
-├── .claude/                             # FROZEN — do not edit
-│   ├── skills/                          # agntcms skills (installed here by CLI)
-│   └── settings.json                    # Claude Code settings
+├── .claude/
+│   ├── skills/                          # FROZEN — agntcms skills (installed here by CLI; do not edit manually)
+│   └── settings.json                    # FROZEN — Claude Code settings
+│   # .claude/launch.json is NOT frozen — it is per-developer harness state (gitignored)
 │
 ├── next.config.ts                       # USER — wrapped with withagntcms()
 ├── package.json
@@ -69,11 +71,14 @@ and must not be modified by the user or by you.
 Frozen paths:
 - `app/[[...slug]]/page.tsx`
 - `app/not-found.tsx`
-- `app/sitemap.ts`
-- `app/robots.ts`
 - `app/api/agntcms/` (the entire directory and all files within it)
 - `.claude/settings.json`
 - `.claude/skills/` (managed by the CLI — do not add or remove files manually)
+
+Not frozen (user-editable defaults):
+- `app/sitemap.ts` — ships as a working default that reads site-meta and listPages; users may customize it freely.
+- `app/robots.ts` — ships as a working default that reads site-meta for the canonical base URL; users may customize it freely.
+- `.claude/launch.json` — per-developer harness file (Claude Code preview/dev-server launch config); gitignored; the framework has no opinion on its contents.
 
 If you detect that a frozen file has been modified (content differs from the framework template),
 warn the user immediately. Do not try to merge or fix the file yourself. The recovery path is:
@@ -207,8 +212,9 @@ The template ships with three globals that the framework reads automatically:
 `site-meta` is special: it is NOT rendered by `<GlobalSlot>` in `app/layout.tsx`. Instead,
 it is read directly by `generateMetadata` in `app/[[...slug]]/page.tsx` and by
 `app/layout.tsx`'s `generateMetadata` to supply `metadataBase`, the title template, and OG
-fallbacks. It is also consumed by the frozen `app/sitemap.ts` and `app/robots.ts` to derive
-the canonical base URL.
+fallbacks. It is also consumed by `app/sitemap.ts` and `app/robots.ts` to derive the
+canonical base URL. Both `sitemap.ts` and `robots.ts` ship as working defaults and are
+user-editable; their default implementations read site-meta but users may customize them.
 
 Do not add a `<GlobalSlot name="site-meta" …>` call to `app/layout.tsx` — the component
 intentionally renders `null` and the data is read through a direct `runtime.getGlobal` call
@@ -272,8 +278,9 @@ must be atomic or that trigger a git commit — never replicate their logic with
 ## Key rules — commit these to memory
 
 1. Never modify any file in the frozen zone. If you are about to edit a file under
-   `app/api/agntcms/`, `app/[[...slug]]/`, `app/not-found.tsx`, `app/sitemap.ts`, `app/robots.ts`,
-   or `.claude/` — stop. That is a framework file. Find another way or ask.
+   `app/api/agntcms/`, `app/[[...slug]]/`, `app/not-found.tsx`, `.claude/settings.json`,
+   or `.claude/skills/` — stop. That is a framework file. Find another way or ask.
+   (`app/sitemap.ts` and `app/robots.ts` are user-editable defaults, not frozen.)
 
 2. Section registration is explicit. A section folder without a `config.ts` entry does not
    exist from the framework's perspective. Both the import and the array entry are required.

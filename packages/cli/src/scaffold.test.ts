@@ -296,4 +296,36 @@ describe('scaffold', () => {
     const buildCall = calls.find(([cmd]) => cmd === 'pnpm build')
     expect(buildCall).toBeUndefined()
   })
+
+  it('writes pnpm-workspace.yaml with allowBuilds: sharp: true', async () => {
+    const target = path.join(tmpDir, 'pnpm-workspace-test')
+    await scaffold(target)
+
+    const yamlPath = path.join(target, 'pnpm-workspace.yaml')
+    expect(fs.existsSync(yamlPath)).toBe(true)
+
+    const content = fs.readFileSync(yamlPath, 'utf-8')
+    expect(content).toContain('allowBuilds:')
+    expect(content).toContain('sharp: true')
+  })
+
+  it('writes pnpm-workspace.yaml before pnpm install runs', async () => {
+    const target = path.join(tmpDir, 'pnpm-workspace-ordering')
+
+    // Track the filesystem state at the moment pnpm install is called by
+    // having the mock capture it. The install command is synchronous (mocked)
+    // so we can snapshot the file existence inside the implementation.
+    let yamlExistedDuringInstall: boolean | undefined
+    vi.mocked(childProcess.execSync).mockImplementation((...args: unknown[]) => {
+      const cmd = args[0]
+      if (cmd === 'pnpm install') {
+        yamlExistedDuringInstall = fs.existsSync(path.join(target, 'pnpm-workspace.yaml'))
+      }
+      return Buffer.alloc(0)
+    })
+
+    await scaffold(target)
+
+    expect(yamlExistedDuringInstall).toBe(true)
+  })
 })

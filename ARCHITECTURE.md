@@ -45,7 +45,7 @@ The structure of the project template is the public contract of the framework. T
 
 The template structure is split into four zones with different responsibilities.
 
-**Frozen zone**. Files shipped by the framework that the user must not touch. Modifying them breaks the contract with the skills and the admin/preview UI. This includes the catch-all dispatcher `app/api/agntcms/[...path]/route.dev.ts`, the catch-all `app/[[...slug]]/page.tsx`, the framework `app/not-found.tsx`, `app/sitemap.ts`, `app/robots.ts`, and the `.claude/` config directory.
+**Frozen zone**. Files shipped by the framework that the user must not touch. Modifying them breaks the contract with the skills and the admin/preview UI. This is exactly: the catch-all dispatcher `app/api/agntcms/[...path]/route.dev.ts` (and its sibling `app/api/agntcms/_shared.ts`), the catch-all `app/[[...slug]]/page.tsx`, the framework `app/not-found.tsx`, and the two framework-managed config paths `.claude/settings.json` and `.claude/skills/`. The zone is deliberately narrow: `app/sitemap.ts` and `app/robots.ts` ship as working defaults but are **not** frozen — they read `site-meta` and `listPages` and are legitimately user-customizable. `.claude/launch.json` is a Claude Code harness file (preview/dev-server launch config), owned by the developer's tooling, not the framework — it is not frozen and is gitignored.
 
 **User zone**. Code the user writes and changes constantly. Section definitions in `agntcms/sections/`, framework configuration in `agntcms/config.ts`, styles, business logic, wrappers in `next.config.ts`.
 
@@ -57,12 +57,13 @@ The template structure is split into four zones with different responsibilities.
 
 ```
 my-agntcms-site/
-├── app/                                  # FROZEN
-│   ├── [[...slug]]/page.tsx              # the single catch-all for content pages
-│   ├── not-found.tsx                     # renders the canonical `404` slug
-│   ├── sitemap.ts                        # framework-generated sitemap.xml
-│   ├── robots.ts                         # framework-generated robots.txt
-│   └── api/agntcms/
+├── app/
+│   ├── [[...slug]]/page.tsx              # FROZEN — the single catch-all for content pages
+│   ├── not-found.tsx                     # FROZEN — renders the canonical `404` slug
+│   ├── sitemap.ts                        # default sitemap.xml — user-editable, not frozen
+│   ├── robots.ts                         # default robots.txt — user-editable, not frozen
+│   └── api/agntcms/                      # FROZEN (whole dir)
+│       ├── _shared.ts                    # module-level singletons
 │       └── [...path]/route.dev.ts        # catch-all dispatcher for admin endpoints (dev-only)
 │
 ├── agntcms/                              # USER ZONE
@@ -85,9 +86,10 @@ my-agntcms-site/
 ├── public/
 │   └── assets/                           # CONTENT for the FS asset adapter
 │
-├── .claude/                              # FROZEN
-│   ├── skills/                           # CLI drops @agntcms/skills here
-│   └── settings.json                     # local Claude Code config (developer-side)
+├── .claude/
+│   ├── skills/                           # FROZEN — CLI drops @agntcms/skills here
+│   ├── settings.json                     # FROZEN — framework-managed Claude Code config
+│   └── launch.json                       # harness preview config — not frozen, gitignored
 │
 ├── next.config.ts                        # USER, via withagntcms()
 ├── package.json
@@ -163,7 +165,7 @@ In addition to `slug` and `sections`, a page has a `seo` block (required) and se
 
 These fields are flat (not nested into a separate namespace) because they are general-purpose — tags and excerpt are useful for more than blogs.
 
-Site-wide SEO defaults (site name, baseUrl, default OG image, default description) live in the built-in `site-meta` global, which is read through the user-zone accessor `agntcms/site-meta.ts` and consumed by frozen `app/sitemap.ts`, `app/robots.ts`, `app/[[...slug]]/page.tsx generateMetadata`, and `app/layout.tsx generateMetadata`. `metadataBase`, default OG/Twitter card, and the canonical fallback all derive from here.
+Site-wide SEO defaults (site name, baseUrl, default OG image, default description) live in the built-in `site-meta` global, which is read through the user-zone accessor `agntcms/site-meta.ts` and consumed by `app/sitemap.ts`, `app/robots.ts`, the frozen `app/[[...slug]]/page.tsx generateMetadata`, and `app/layout.tsx generateMetadata`. `metadataBase`, default OG/Twitter card, and the canonical fallback all derive from here.
 
 ### Page queries (listPages)
 

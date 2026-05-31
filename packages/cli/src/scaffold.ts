@@ -64,6 +64,7 @@ export async function scaffold(targetDir: string, options: ScaffoldOptions = {})
   copyTemplate(templateDir, absoluteTarget)
   rewritePackageJson(absoluteTarget, projectName, { local, monorepoRoot })
   rewriteTsconfig(absoluteTarget, { local, monorepoRoot })
+  writePnpmWorkspace(absoluteTarget)
 
   // Build monorepo packages first so that file: references in the scaffolded
   // project always resolve to a fresh dist/. Skipping this causes hard-to-debug
@@ -351,6 +352,30 @@ function rewriteTsconfig(projectDir: string, opts: RewriteOptions): void {
   tsconfig['compilerOptions'] = { ...base, ...existing }
 
   fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 2) + '\n', 'utf-8')
+}
+
+/**
+ * Write a pnpm-workspace.yaml into the scaffolded project root.
+ *
+ * pnpm 10+ no longer reads the legacy `pnpm` field from package.json for
+ * build-script approval. The canonical location is now the workspace root's
+ * pnpm-workspace.yaml. Without this file pnpm install would emit
+ * ERR_PNPM_IGNORED_BUILDS and skip sharp's native postinstall build, breaking
+ * Next.js image optimization on the very first `pnpm install`.
+ *
+ * `allowBuilds` (a map) is the pnpm ≥10.26 successor to the deprecated
+ * `onlyBuiltDependencies` array.
+ */
+export function writePnpmWorkspace(projectDir: string): void {
+  const content = [
+    '# pnpm reads build-script approval from the workspace root.',
+    '# sharp ships a native postinstall build that Next.js image optimization needs.',
+    'allowBuilds:',
+    '  sharp: true',
+    '',
+  ].join('\n')
+
+  fs.writeFileSync(path.join(projectDir, 'pnpm-workspace.yaml'), content, 'utf-8')
 }
 
 function printNextSteps(

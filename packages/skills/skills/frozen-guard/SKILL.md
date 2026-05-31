@@ -22,13 +22,11 @@ The following paths are frozen. Any modification to any of them is a contract vi
 | # | Path | Purpose |
 |---|------|---------|
 | 1 | `app/[[...slug]]/page.tsx` | Catch-all page proxy — renders all content pages |
-| 1a | `app/not-found.tsx` | Framework not-found route — renders the canonical CMS `404` page |
-| 1b | `app/sitemap.ts` | Sitemap generator — reads site-meta and all published pages |
-| 1c | `app/robots.ts` | robots.txt generator — reads site-meta for canonical base URL |
-| 2 | `app/api/agntcms/_shared.ts` | Module-level singletons (runtime, previewTokenStore) shared by all API route handlers |
-| 3 | `app/api/agntcms/[...path]/route.dev.ts` | Catch-all dispatcher — wires every admin endpoint into one file (dev-only, excluded from prod by withagntcms pageExtensions) |
-| 4 | `.claude/settings.json` | Claude Code settings |
-| 5 | `.claude/skills/` (all files) | Skills installed by the CLI — not user-managed |
+| 2 | `app/not-found.tsx` | Framework not-found route — renders the canonical CMS `404` page |
+| 3 | `app/api/agntcms/_shared.ts` | Module-level singletons (runtime, previewTokenStore) shared by all API route handlers |
+| 4 | `app/api/agntcms/[...path]/route.dev.ts` | Catch-all dispatcher — wires every admin endpoint into one file (dev-only, excluded from prod by withagntcms pageExtensions) |
+| 5 | `.claude/settings.json` | Claude Code settings |
+| 6 | `.claude/skills/` (all files) | Skills installed by the CLI — not user-managed |
 
 ---
 
@@ -96,17 +94,18 @@ When you suspect a frozen file has drifted, or when performing a pre-task health
    from sources outside its allowed set, or that contains ad-hoc logic beyond the
    framework wire-up, has been modified.
 
-3. **Inspect `app/sitemap.ts` and `app/robots.ts`.** Both must contain only a `// FROZEN` comment header and a default export async function that reads `site-meta` via `runtime.getGlobal` and calls `runtime.listPages` (sitemap only). Any additional imports or business logic beyond that indicates modification.
-
-4. **Inspect `app/[[...slug]]/page.tsx` and `app/not-found.tsx`.**
+3. **Inspect `app/[[...slug]]/page.tsx` and `app/not-found.tsx`.**
    `app/[[...slug]]/page.tsx` is a thin proxy to `PageRenderer` from `@agntcms/next/client`.
    `app/not-found.tsx` is the framework-owned Next.js not-found route that reads the canonical
    CMS page at slug `404`. Custom rendering logic in either file, or a missing file, is a violation.
 
-5. **Inspect `.claude/settings.json`.** Confirm the `enabledPlugins` entry for the
+4. **Inspect `.claude/settings.json`.** Confirm the `enabledPlugins` entry for the
    frontend-design plugin is present. Other entries coexisting with it are fine.
 
 The following paths are **not** frozen and are expected to exist and change:
+- `app/sitemap.ts` — user-editable default; ships as a working sitemap generator but may be freely customized.
+- `app/robots.ts` — user-editable default; ships as a working robots.txt generator but may be freely customized.
+- `.claude/launch.json` — per-developer harness file (Claude Code preview/dev-server launch config); gitignored; the framework has no opinion on its contents. Create or edit it freely when starting a preview.
 - `styles/` (`globals.css`, `theme.css`, `typography.css`) — Tailwind v4 design tokens
 - `fonts/` — local font files (Satoshi woff2)
 - `postcss.config.mjs` — Tailwind v4 PostCSS integration

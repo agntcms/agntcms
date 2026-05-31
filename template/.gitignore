@@ -47,6 +47,7 @@ Thumbs.db
 
 # Claude Code (local-only)
 .claude/settings.local.json
+.claude/launch.json
 
 # agntcms — content state
 # Drafts are transient editor state — written by the dev server on every

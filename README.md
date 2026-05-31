@@ -117,9 +117,9 @@ into a three-day merge.
 
 | Zone | Path | Who edits |
 |---|---|---|
-| **User** | `agntcms/`, `styles/`, `BRAND.md`, Next.js configs | developer, sometimes the agent through skills |
+| **User** | `agntcms/`, `styles/`, `BRAND.md`, `app/sitemap.ts`, `app/robots.ts`, Next.js configs | developer, sometimes the agent through skills |
 | **Content** | `content/`, `public/assets/` | editor and the agent through skills (not by hand) |
-| **Frozen** | `app/api/agntcms/`, `app/[[...slug]]/`, `app/not-found.tsx`, `app/sitemap.ts`, `app/robots.ts`, `.claude/` | no one (version bumps only) |
+| **Frozen** | `app/api/agntcms/`, `app/[[...slug]]/`, `app/not-found.tsx`, `.claude/settings.json`, `.claude/skills/` | no one (version bumps only) |
 
 A section type lives under `agntcms/sections/<Name>/` (`index.ts`, `schema.ts`,
 `component.tsx`) and is registered with two lines in `agntcms/config.ts` —
