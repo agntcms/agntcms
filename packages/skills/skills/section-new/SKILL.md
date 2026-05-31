@@ -239,8 +239,9 @@ export const schema = {
   tiers: ListField({
     // Inline descriptor — new tiers start pre-filled so the section
     // looks believable immediately rather than rendering blank cards.
-    name: { kind: 'richText' as const, default: 'Tier name' },
-    price: { kind: 'richText' as const, default: '$0/mo' },
+    // Use realistic copy (see "Default content must be visually representative" above).
+    name: { kind: 'richText' as const, default: 'Pro' },
+    price: { kind: 'richText' as const, default: '$49/mo' },
   }),
 }
 ```
@@ -873,10 +874,51 @@ export const <Name> = defineSection({
   category: '<Category>',
   schema,
   component: <Name>Component,
+  previewData: {
+    // REQUIRED: every field must have a non-empty, representative value.
+    // See "previewData contract" below for the full requirement.
+    <fieldName>: '<representative value>',
+  },
 })
 ```
 
 The exported constant name is the section name exactly as provided (e.g. `Hero`, `TextBlock`).
+
+### previewData contract
+
+**`previewData` is REQUIRED on every new section.** It serves two roles from a single authored
+sample — omitting it or filling it with placeholders causes both to fail:
+
+1. **Picker preview card.** The section picker modal renders this sample in the card the author
+   sees when choosing a section type. Empty or placeholder content makes the preview useless.
+2. **Insertion seed.** When a section is inserted or replaced through the picker,
+   `deriveHandlerDeps` layers `previewData` over the auto-generated per-field placeholders
+   (`{ ...computedDefaults, ...previewData }`). The author sees this content the moment
+   the section lands on the page. If `previewData` is missing or empty, the section arrives
+   with bare framework placeholders ("Start writing here...", "Placeholder image") instead
+   of representative copy — effectively shipping an empty section to the user.
+
+**There is no separate "defaults" authoring field.** The auto-generated per-field placeholders
+survive only for fields the author deliberately omitted from `previewData`. Do not rely on
+them — they are a last-resort fallback, not the intended authoring path.
+
+**Content quality rules for `previewData`:**
+
+- Every top-level field must be present and non-empty.
+- `ListField` fields must carry 2–4 real items (each item fully filled in). An empty list
+  renders as a blank section.
+- Copy must read as finished marketing or editorial content — same standard as the
+  "Default content must be visually representative" rule above. The same banned defaults
+  apply: no "Heading", no "Start writing here...", no empty image alts.
+- `ImageField` values must use `{ filename: '<real-asset-or-placeholder.png>', alt: '<descriptive alt>' }`.
+  `placeholder.png` is an acceptable filename (it ships in `public/assets/`); the `alt` must
+  describe a real scene or purpose.
+- `LinkField` values must include a non-empty `label` on every branch. `slug`, `url`, `email`,
+  and `phone` may be empty strings when the link target is intentionally unconfigured
+  (the author will fill them in), but `label` must always be action-oriented copy.
+- Input shape is BARE-VALUE per field (same as stored `data` in content JSON), NOT the
+  slot-wrapped `EditableSlot<K, V>` form. A payload copied verbatim from a real page's
+  `content/pages/*.json` entry Just Works.
 
 **`category`** is a real public field on `defineSection` (type `string | undefined`). It
 groups sections in the picker modal. Use one of the canonical values from the template, or
@@ -1026,6 +1068,13 @@ I will attempt to fix this. <describe what you changed>
 
 1. **Always create all three files.** A partial section (e.g. missing `index.ts`) breaks
    typecheck for the whole project. Create all three atomically.
+1a. **`previewData` is required.** Every section's `index.ts` must include a `previewData`
+    object with every field filled in using representative, non-placeholder content. An empty
+    or missing `previewData` causes two failures simultaneously: the picker preview card shows
+    nothing useful, and newly inserted sections land with bare framework placeholders instead
+    of real copy. See the "previewData contract" subsection above for content quality rules.
+    The check: every top-level key must be non-empty, and every `ListField` must carry at
+    least 2 items.
 2. **Props use `EditableSlot<K, V>` types.** Every editable field in `Props` must be typed as
    `EditableSlot<K, V>` (import from `@agntcms/next/client`). `ReferenceField` stays as
    `{ slug: string }` — it is not inline-editable in v1 and has no slot. The type system will

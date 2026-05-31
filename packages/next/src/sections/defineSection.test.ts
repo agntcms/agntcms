@@ -156,11 +156,11 @@ describe('defineSection — runtime behaviour', () => {
   })
 
   it('round-trips previewData onto the returned definition when provided', () => {
-    // `previewData` is picker-cosmetic only — the factory must surface it
-    // verbatim so `SectionPickerModal` can merge it over `defaults` for
-    // its preview cards. Insertion paths (SectionEditControls,
-    // SectionRenderer's wrap, GlobalSlot's wrap, global-handler's create
-    // merge) read `defaults`, not `previewData`.
+    // `defineSection` keeps `previewData` and the computed `defaults`
+    // INDEPENDENT — it does not merge them. The factory just surfaces
+    // `previewData` verbatim. The merge into the insertion seed (and the
+    // picker preview cards) happens later in `deriveHandlerDeps`
+    // (`config/derive.ts`), which layers `previewData` over `defaults`.
     const sample = {
       title: 'Welcome to the show',
       body: 'A longer rich-text passage that fills the preview card.',
@@ -177,7 +177,9 @@ describe('defineSection — runtime behaviour', () => {
     // Round-trip: same reference, no defensive copy. The factory does no
     // mutation, and the registry is read-only at runtime.
     expect(def.previewData).toBe(sample)
-    // Defaults are independent — `previewData` does not pollute them.
+    // Defaults stay independent at the `defineSection` layer — `previewData`
+    // does not pollute them here. (The two are combined only downstream, in
+    // `deriveHandlerDeps`.)
     expect(def.defaults).toEqual({ title: 'Title', body: 'Start writing here...' })
   })
 

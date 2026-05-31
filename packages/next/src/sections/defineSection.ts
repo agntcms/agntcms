@@ -282,14 +282,16 @@ export interface SectionDefinition<
   readonly schema: S
   /** React component reference. See file header on why not a thunk. */
   readonly component: C
-  /** Pre-computed placeholder values for each field, used when INSERTING a
-   *  new section in preview mode. Computed from field descriptors' `default`
-   *  property (when present) or from the built-in per-kind fallback.
+  /** Pre-computed placeholder values for each field. Computed from field
+   *  descriptors' `default` property (when present) or from the built-in
+   *  per-kind fallback.
    *
-   *  This is the canonical insertion seed: every newly-created section
-   *  starts from `defaults` and only `defaults`. The section picker modal
-   *  layers `previewData` ON TOP of `defaults` purely for its preview
-   *  cards; that layering MUST NOT reach insertion.
+   *  This is the FALLBACK layer of the insertion seed, not the whole seed.
+   *  The canonical insertion seed (built by `deriveHandlerDeps` in
+   *  `config/derive.ts`) is the authored `previewData` layered shallow over
+   *  these computed `defaults`. A field the author covers in `previewData`
+   *  uses that representative value at insertion; a field the author omits
+   *  falls back to the placeholder here. See `previewData` below.
    *
    *  Typed as `Record<string, unknown>` so the registry type stays stable
    *  even if a future built-in field type introduces a non-string runtime
@@ -317,10 +319,16 @@ export interface SectionDefinition<
    * Default: `false` (absent).
    */
   readonly system?: boolean
-  /** Optional richer sample content used ONLY by the section picker modal
-   *  to render preview cards. Merged shallow-over `defaults` at card
-   *  render time. Insertion paths must ignore this field — see
-   *  `defaults` above.
+  /** The single authored representative sample for this section. Serves two
+   *  roles, both from this one source:
+   *    1. The section picker modal renders its preview card from it (layered
+   *       shallow over `defaults`).
+   *    2. It is the insertion seed: `deriveHandlerDeps` layers it shallow
+   *       (per-field, `previewData` wins) over the computed `defaults`, so a
+   *       newly inserted/replaced section carries this representative content
+   *       instead of bare placeholders.
+   *  The computed `defaults` remain only as the fallback for fields the
+   *  author omitted here.
    *
    *  Typed as `Record<string, unknown>` (not `Partial<DataOf<S>>`) on the
    *  output side because the registry is heterogeneous: the precise
@@ -376,15 +384,16 @@ export interface DefineSectionInput<
   readonly component: C
   /** Framework-managed flag — see `SectionDefinition.system`. Default `false`. */
   readonly system?: boolean
-  /** Optional richer sample content shown by the section picker modal's
-   *  preview cards. Merged SHALLOW over `defaults` at preview-render
-   *  time (per-field; nested structures are atomic). Missing fields fall
-   *  back to `defaults`.
+  /** Optional richer sample content — the single authored representative
+   *  sample for this section. Merged SHALLOW over `defaults` (per-field;
+   *  nested structures are atomic). Missing fields fall back to `defaults`.
    *
-   *  Insertion of a new section uses `defaults` only — `previewData` is
-   *  picker-cosmetic, not seed content. Use this to dress up empty
-   *  `ListField`s or short `RichTextField` defaults so the modal cards
-   *  look populated.
+   *  This sample drives BOTH the section picker modal's preview cards AND
+   *  the insertion seed: a newly inserted/replaced section is populated
+   *  with `previewData` layered over the computed `defaults` (see
+   *  `deriveHandlerDeps`). So this is real seed content, not just a picker
+   *  cosmetic — use it to give inserted sections representative copy, a
+   *  populated `ListField`, a filled-in `RichTextField`, etc.
    *
    *  Input shape is the BARE-VALUE form (`FieldValueFor<F>` per field),
    *  not the slot-wrapped `DataOf<S>`. Reasons:
@@ -511,9 +520,10 @@ export function defineSection<
     component: input.component,
     defaults,
     ...(input.system !== undefined ? { system: input.system } : {}),
-    // `previewData` is purely picker-cosmetic. Pass through as-is when
-    // supplied; the picker merges it over `defaults` at render time. The
-    // conditional spread keeps the returned object key-clean under
+    // `previewData` is the authored representative sample. Pass through
+    // as-is when supplied; both the picker (preview cards) and the
+    // insertion seed built by `deriveHandlerDeps` layer it over `defaults`.
+    // The conditional spread keeps the returned object key-clean under
     // `exactOptionalPropertyTypes` (no `previewData: undefined` leaks).
     ...(input.previewData !== undefined
       ? { previewData: input.previewData as Record<string, unknown> }

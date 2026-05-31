@@ -10,6 +10,7 @@ function section(
   name: string,
   defaults: Record<string, unknown>,
   system?: boolean,
+  previewData?: Record<string, unknown>,
 ): AnySectionDefinition {
   return {
     name,
@@ -17,6 +18,7 @@ function section(
     component: (() => null) as unknown as AnySectionDefinition['component'],
     defaults,
     ...(system !== undefined ? { system } : {}),
+    ...(previewData !== undefined ? { previewData } : {}),
   }
 }
 
@@ -46,10 +48,45 @@ describe('deriveHandlerDeps', () => {
       'Hero',
       'SiteMeta',
     ])
+    // No section here carries `previewData`, so the insertion seed equals
+    // the computed `defaults` verbatim.
     expect(deps.sectionDefaults.get('Hero')).toEqual({ title: 'Hi' })
     expect(deps.sectionDefaults.get('SiteMeta')).toEqual({ siteName: '' })
     expect(deps.sectionDefaults.get('Footer')).toEqual({ copyright: '' })
     expect(Array.from(deps.systemTypes)).toEqual(['SiteMeta'])
+  })
+
+  it('layers previewData over computed defaults to form the insertion seed', () => {
+    // The seed must be `previewData` merged shallow over `defaults`:
+    // previewData-covered fields take the representative sample, omitted
+    // fields keep the computed placeholder. This is what makes a newly
+    // inserted section land with real content instead of bare placeholders.
+    const cfg = config([
+      section(
+        'Hero',
+        { title: 'Title', body: 'Start writing here...', cta: 'Learn more' },
+        undefined,
+        { title: 'Welcome to the show', body: 'A longer sample passage.' },
+      ),
+    ])
+
+    const seed = deriveHandlerDeps(cfg).sectionDefaults.get('Hero')
+
+    expect(seed).toEqual({
+      // previewData wins per-field…
+      title: 'Welcome to the show',
+      body: 'A longer sample passage.',
+      // …and fields previewData omits fall back to the computed default.
+      cta: 'Learn more',
+    })
+  })
+
+  it('uses computed defaults as the seed when a section has no previewData', () => {
+    const cfg = config([section('Plain', { heading: 'Heading', count: 0 })])
+
+    const seed = deriveHandlerDeps(cfg).sectionDefaults.get('Plain')
+
+    expect(seed).toEqual({ heading: 'Heading', count: 0 })
   })
 
   it('treats system: undefined and system: false as non-system', () => {

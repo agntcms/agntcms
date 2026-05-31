@@ -223,6 +223,62 @@ developer to `agntcms-section-new` → "Tailwind class and layout pitfalls" for 
 
 ---
 
+## Step 4c: previewData completeness check (per section)
+
+`previewData` is the single authored representative sample that drives both the section
+picker preview card AND the insertion seed. Missing or empty `previewData` means newly
+inserted sections land with bare framework placeholders. This step checks the three
+structural requirements.
+
+This step is a text/parse scan of `agntcms/sections/<Name>/index.ts`.
+
+### 4c-1. previewData presence (BLOCKING)
+
+Check that `previewData` appears as a key in the `defineSection({…})` call inside
+`index.ts`. A simple text scan for `previewData:` in the file is sufficient.
+
+System sections (those with `system: true` in their `defineSection` call) are exempt —
+they are hidden from the picker and do not require a sample. Check for `system: true` in the
+file before applying this rule.
+
+If `previewData` is absent (and the section is not system): record an **error** —
+"`previewData` is missing. Every picker-insertable section must have a representative
+sample. See 'previewData contract' in `agntcms-section-new` for content quality rules."
+
+### 4c-2. No empty top-level fields (BLOCKING)
+
+Parse the `previewData` object from `index.ts` and check that no top-level value is:
+- An empty string (`''`)
+- `null` or `undefined`
+- An empty array (`[]`)
+
+If any top-level field is empty: record an **error** — "`previewData.<fieldName>` is empty.
+The picker card and insertion seed both use this sample — empty fields ship empty sections."
+
+This is a best-effort text scan; an AST parse is ideal but not required. False negatives
+(empty values nested inside objects) are acceptable.
+
+### 4c-3. ListField items: minimum 2 per list (BLOCKING)
+
+For each top-level key in `previewData` whose value is an array literal, count the items.
+If any array has fewer than 2 items: record an **error** — "`previewData.<fieldName>` has
+<N> item(s). ListField fields need at least 2 real items to show meaningful structure in the
+picker preview."
+
+Exception: `BooleanField`, `NumberField`, `SelectField` values (non-list scalars) are not
+subject to this check. The check applies only to keys whose value is a JSON array.
+
+### Reporting 4c findings
+
+Include previewData check results in the section report. Use ✗ for any blocking finding.
+Point the developer to `agntcms-section-new` → "previewData contract" for guidance.
+
+When all three 4c sub-checks pass with no system exemption: record ✓ `previewData:
+complete`.
+When the section is system-exempted: record ✓ `previewData: not required (system section)`.
+
+---
+
 ## Step 5: Report
 
 ### Single section
@@ -234,8 +290,10 @@ Section validation report for <Name>:
 ✓ Registration: found in config.ts
 ✓ Types: typecheck passed
 ⚠ Editability: field 'subtitle' (TextField) is not wrapped in EditableText
+✓ previewData: complete
+✗ previewData: 'items' list has 1 item — needs at least 2
 
-Overall: 1 warning, 0 errors
+Overall: 1 warning, 1 error
 ```
 
 Use ✓ for passed checks, ⚠ for warnings, ✗ for errors.
@@ -320,3 +378,7 @@ Do NOT validate `content/submissions/` files — they are `Submission` objects.
    it valid. The grid-item `h-full` note is informational and never blocks. Always include the
    4b scan result in the final report output even when there are no findings (record ✓ or the
    soft reminder as appropriate).
+7. **Step 4c `previewData` checks are blocking errors.** Missing `previewData`, an empty top-level
+   field, or a `ListField` with fewer than 2 items must be fixed before the section is considered
+   valid. System sections (those with `system: true`) are exempt — they are hidden from the
+   picker and do not need a representative sample.
