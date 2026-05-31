@@ -6,15 +6,16 @@ sections, configuration, and content.
 ## First time here?
 
 This template ships with the agntcms demo (brand, home page, blog posts about agntcms
-itself). To turn it into your own project, run `/agntcms-init` and provide a Claude Design
-bundle — either a URL from `claude.ai/design` or a local extracted directory. The skill
-wipes the demo, places the bundle under `design/<bundle-name>/`, reads the bundle end-to-end
-(chats, primary file, all imports), migrates tokens from `colors_and_type.css` into
-`styles/theme.css` verbatim, creates and registers every section type the bundle requires,
-populates `content/pages/<slug>.json` for every content page with copy lifted verbatim from
-the mocks, updates the globals (header, footer, optional announcement) from the mock header
-and footer, and writes `BRAND.md` pointing at the bundle. All steps run to completion in one
-pass before reporting done.
+itself). To turn it into your own project, run `/agntcms-init-from-artifact` and point it
+at an existing app generated from a Claude artifact — a local directory containing real
+source code (React, Vue, plain HTML + CSS). The skill wipes the demo, copies the source
+stylesheets verbatim under `styles/`, migrates the design tokens into `styles/theme.css`,
+creates and registers every section type the source requires (using the source's actual CSS
+classes and HTML structure), populates `content/pages/<slug>.json` for every page with copy
+lifted verbatim from the source components, updates the globals (header, footer) from the
+source's header and footer components, and writes `BRAND.md` pointing at the source. All
+steps run to completion in one pass, then takes a screenshot pass to verify. Screenshots are
+used to verify, not to drive implementation.
 
 ## Skill-check protocol
 
@@ -104,7 +105,7 @@ These skills are your primary reference. Check this list before every operation.
 Skills are installed in `.claude/skills/` and loaded with the `/` command.
 
 **Project setup**
-- `agntcms-init` — first-run setup: wipe the demo, acquire a Claude Design bundle, migrate tokens, create sections, populate every content page, update globals, write BRAND.md
+- `agntcms-init-from-artifact` — first-run setup: wipe the demo, copy source styles verbatim, create sections from the source markup, populate every content page, update globals, write BRAND.md
 - `agntcms-structure` — canonical project layout and zone rules
 
 **Section development**
