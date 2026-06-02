@@ -1,6 +1,6 @@
 {
   "name": "@agntcms/next",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "agntcms runtime for Next.js: domain model, storage adapters, React components",
   "license": "MIT",
   "repository": {
