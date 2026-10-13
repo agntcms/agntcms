@@ -26,7 +26,7 @@ const root = __dirname
 
 // Step 1: TypeScript compilation
 console.log('Building TypeScript…')
-execSync('tsc --project tsconfig.json', { cwd: root, stdio: 'inherit' })
+execSync('tsc --project tsconfig.build.json', { cwd: root, stdio: 'inherit' })
 
 // Step 2: Copy raw skill markdown into dist/skills/ so the npm package ships
 // both the compiled registry and the verbatim SKILL.md content.

@@ -1,6 +1,6 @@
 {
   "name": "agntcms-template",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "Reference Next.js project used by create-agntcms-app. Not published to npm.",
   "private": true,
   "scripts": {
@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@agntcms/next": "workspace:*",
-    "next": "^15.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "^15.5.27",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@agntcms/skills": "workspace:*",
@@ -27,5 +27,9 @@
     "tailwindcss-animate": "^1",
     "tailwindcss-react-aria-components": "^2",
     "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=22.11.0"
   }
 }

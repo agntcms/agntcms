@@ -161,10 +161,10 @@ describe('scaffold', () => {
     const nextRef = pkg.dependencies['@agntcms/next']
     expect(nextRef).toBeDefined()
     expect(nextRef).toMatch(/^file:/)
-    expect(nextRef).toContain('packages/next')
+    expect(nextRef).toContain(path.join('packages', 'next'))
 
     // The file: path must be absolute (so the project works from any location).
-    expect(nextRef?.startsWith('file:/')).toBe(true)
+    expect(path.isAbsolute(nextRef?.slice('file:'.length) ?? '')).toBe(true)
 
     // No workspace: references must remain.
     const allDeps = {

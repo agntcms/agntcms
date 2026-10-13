@@ -8,4 +8,5 @@ packages:
 # deps check exits non-zero. Scaffolded standalone projects get the same setting
 # written into their own pnpm-workspace.yaml by create-agntcms-app.
 allowBuilds:
+  esbuild: true
   sharp: true

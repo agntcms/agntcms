@@ -102,7 +102,7 @@ This is where the user defines the vocabulary of their site.
 ### Content zone — data files, not code
 
 `content/pages/`, `content/drafts/`, `content/globals/`, `content/global-drafts/`,
-`content/history/`, and `content/history-globals/` hold JSON files. All are committed to git.
+`content/history/`, and `content/history-globals/` hold JSON files. Published content and history are committed to git. The template ignores page drafts by default; explicitly choose a draft-tracking policy if hand-off requires it.
 
 - `content/history/` — full-snapshot version history for pages (one subdirectory per slug).
 - `content/history-globals/` — full-snapshot version history for globals (one subdirectory per name).

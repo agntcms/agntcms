@@ -70,7 +70,7 @@ Project name: my-site.
 
 Claude reads the site, runs the scaffolding command, installs dependencies, and
 syncs the skills from `@agntcms/skills` into `.claude/skills/`. When it is done you
-have a running demo — roughly thirty section types and a handful of content pages —
+have a running demo — 20 section types and a handful of content pages —
 *and* a directory Claude Code already understands.
 
 ### Manual fallback
@@ -83,8 +83,8 @@ cd my-site
 pnpm dev
 ```
 
-You still need Claude Code for everything after this — it is not optional, just
-deferred.
+Claude Code is optional. The inline editor works in `pnpm dev`; skills help an
+agent scaffold sections and manage content in the same repository.
 
 ## What you get out of the box
 
@@ -92,8 +92,8 @@ deferred.
   in two minutes.
 - **Drafts and version history.** Every edit lands in `content/drafts/<slug>.json`
   first; publishing moves it to `content/pages/<slug>.json` and writes a timestamped
-  snapshot to `content/history/<slug>/`. Rollback is one skill call. Drafts are
-  committed to git, so switching machines or handing off never loses work.
+  snapshot to `content/history/<slug>/`. Rollback is one skill call. Page drafts are local and gitignored by default;
+  configure draft tracking explicitly when handing off unfinished work.
 - **Asset management.** Files live under `public/assets/<sha256>.<ext>`. Filenames
   are content hashes — identical uploads deduplicate automatically and cache
   invalidation is free.
@@ -101,7 +101,7 @@ deferred.
   hover outline. Click to edit in place; drop back into Claude Code for bigger jobs.
 - **Section replace.** Each section has a swap action that hands the slot to a
   different section type and fills in sensible defaults from the new schema.
-- **22 Claude Code skills (`@agntcms/skills`).** One skill per operation — create
+- **17 Claude Code skills (`@agntcms/skills`).** One skill per operation — create
   page, edit a single field, replace a section, publish, roll back, rename a slug,
   scaffold a new section type, migrate from a Claude Design bundle. The agent picks
   the skill from the task; you do not memorise names.
@@ -138,7 +138,7 @@ can sit deeper than any plugin could.
 - **Claude Code Desktop.** The primary editing surface. Without it, the framework
   is just Next.js — no agent, no skills, no AI-native flow.
 
-Requirements: **Node.js ≥ 20**, **pnpm ≥ 9**, **git**.
+Requirements: **Node.js ≥ 22.11**, **pnpm ≥ 10.26** (the repository pins 10.33.2), **git**.
 
 ## Documentation
 
@@ -159,7 +159,7 @@ and run the template locally with `pnpm template:dev`.
 
 ## Roadmap
 
-Deliberately short — v1 just shipped, and the rest will be shaped by what people
+Deliberately short — v0.5 is published, and the rest will be shaped by what people
 actually run into.
 
 - **Next:** a proper Postgres adapter — drafts, history, and admin endpoints behaving

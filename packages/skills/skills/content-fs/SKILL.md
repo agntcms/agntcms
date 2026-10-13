@@ -71,8 +71,9 @@ Do not promote a draft by moving or copying files yourself. Publishing is a runt
   (`POST /api/agntcms/draft/publish` with the slug in the request body).
 
 The runtime handles moving `drafts/<slug>.json` to `pages/<slug>.json`, writing a timestamped
-snapshot to `history/<slug>/`, and committing the change to git. If you move files manually
-you will skip the history snapshot and the git commit.
+snapshot to `history/<slug>/`, then removing the draft. The runtime does not commit,
+push, or deploy. Manual moves bypass version history; use `agntcms-git-publish`
+for an authorized commit after verifying the local publication.
 
 ---
 
@@ -191,7 +192,7 @@ simpler.
 - **Never manually rename or reorganize the `content/` directory structure.** Slugs are
   derived from file paths; renaming breaks the routing.
 - **Never move a draft to pages yourself.** Use the publish API so the runtime can write the
-  history snapshot and the git commit.
+  history snapshot. Git commits are a separate authorized operation.
 - **Never use MCP to read or write content.** Use your native file tools.
 
 ---

@@ -14,7 +14,7 @@
 // Default page extensions that Next.js scans for routes.
 //
 // In dev we additionally accept `.dev.ts` / `.dev.tsx`, which lets the
-// template name dev-only routes (preview toolbar, admin UI, agent MCP
+// template name dev-only routes (preview toolbar, admin UI
 // endpoints) like `route.dev.ts` so they automatically drop out of the
 // production build. ARCHITECTURE.md §8 (line 438): "in a production
 // deploy, preview mode and the admin UI are hidden by default."
@@ -26,9 +26,14 @@
 const DEV_PAGE_EXTENSIONS = ['dev.ts', 'dev.tsx', 'ts', 'tsx', 'js', 'jsx']
 const PROD_PAGE_EXTENSIONS = ['ts', 'tsx', 'js', 'jsx']
 
-// The glob the framework needs traced for every route. Lives at module
-// scope so tests can rely on a single canonical value if needed.
-const CONTENT_TRACE_GLOB = './content/**/*'
+// Serverless production functions only need published content.
+const PUBLISHED_CONTENT_GLOBS = ['./content/pages/**/*', './content/globals/**/*']
+const PRIVATE_CONTENT_GLOBS = [
+  './content/drafts/**/*',
+  './content/global-drafts/**/*',
+  './content/history/**/*',
+  './content/history-globals/**/*',
+]
 
 type TracingIncludes = Record<string, string[]>
 
@@ -36,7 +41,7 @@ type TracingIncludes = Record<string, string[]>
  * Wrap a Next.js configuration object for agntcms.
  *
  * Injects a `pageExtensions` default: in dev we accept `.dev.ts` /
- * `.dev.tsx` so dev-only routes (preview, admin, MCP) can be named
+ * `.dev.tsx` so dev-only routes (preview, admin) can be named
  * `route.dev.ts` and excluded from the production build automatically.
  * If the user already provided `pageExtensions`, theirs wins — the
  * convention is opt-in.
@@ -47,7 +52,7 @@ type TracingIncludes = Record<string, string[]>
  */
 export function withagntcms<T extends Record<string, unknown>>(
   nextConfig: T,
-): T & { pageExtensions: string[]; outputFileTracingIncludes: TracingIncludes } {
+): T & { pageExtensions: string[]; outputFileTracingIncludes: TracingIncludes; outputFileTracingExcludes: TracingIncludes } {
   // We read NODE_ENV at call time (not module load) so the same process
   // can run with different environments across tests without re-importing.
   const isProd = process.env.NODE_ENV === 'production'
@@ -71,13 +76,21 @@ export function withagntcms<T extends Record<string, unknown>>(
     ? nextConfig.outputFileTracingIncludes
     : {}
   const outputFileTracingIncludes = mergeTracingIncludes(userTracingIncludes, {
-    '/**': [CONTENT_TRACE_GLOB],
+    '/**': isProd ? PUBLISHED_CONTENT_GLOBS : ['./content/**/*'],
   })
+
+  const userTracingExcludes = isPlainRecordOfStringArrays(nextConfig.outputFileTracingExcludes)
+    ? nextConfig.outputFileTracingExcludes
+    : {}
+  const outputFileTracingExcludes = mergeTracingIncludes(userTracingExcludes,
+    isProd ? { '/**': PRIVATE_CONTENT_GLOBS } : {},
+  )
 
   return {
     ...nextConfig,
     pageExtensions,
     outputFileTracingIncludes,
+    outputFileTracingExcludes,
   }
 }
 

@@ -2,7 +2,7 @@
   "name": "agntcms",
   "version": "0.1.0",
   "private": true,
-  "description": "Two-process framework for Next.js where Claude Code is a first-class user alongside the human editor",
+  "description": "Single-process CMS framework for Next.js with inline editing and optional agent skills",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,8 +30,5 @@
     "turbo": "^2.3.3",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": ["sharp"]
   }
 }

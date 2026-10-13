@@ -2,7 +2,19 @@
 
 All notable changes to agntcms are recorded here. Versions are released in lockstep across all published packages: `@agntcms/next`, `@agntcms/skills`, `create-agntcms-app`.
 
-## [0.3.2] — Unreleased
+## [0.5.10] — Unreleased
+
+### Fixes
+
+- Production preview rejects client-controlled cookies; serverless tracing excludes unpublished drafts and history.
+- Template requires Next.js 15.5.27 or newer in the 15.x line. Next.js 16 migration is deferred.
+- Publish skills describe filesystem-only publishing and separate authorized git/deploy steps.
+- Skill sync retires the unmodified old `init` skill while preserving customized files. Runtime and skills updates use one exact published version.
+- Corrected current requirements and counts (17 skills, 20 template sections); added CI for package tests, types, builds and the template.
+
+No frozen files or public exports changed. Existing sites must replace raw preview-cookie or native `draftMode()` checks with `getPreviewMode()` in both the page and layout (ARCHITECTURE.md §3/§6).
+
+## [0.3.2] — Historical notes
 
 ### Fixes
 
