@@ -273,7 +273,7 @@ function rewriteWorkspaceDeps(
       }
       // Normal mode: use the npm version string from the lockstep release.
       const mapped = WORKSPACE_PACKAGE_VERSION_MAP[name]
-      deps[name] = mapped !== undefined ? `^${mapped}` : `^${CLI_VERSION}`
+      deps[name] = mapped ?? CLI_VERSION
     }
   }
 }

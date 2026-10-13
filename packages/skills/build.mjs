@@ -16,7 +16,7 @@
  *         tsc does not support banner injection, so this is done as a post-step.
  */
 
-import { cp, mkdir, readFile, writeFile, chmod } from 'node:fs/promises'
+import { cp, mkdir, readFile, writeFile, chmod, rm } from 'node:fs/promises'
 import { execSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -25,6 +25,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = __dirname
 
 // Step 1: TypeScript compilation
+// Remove obsolete compiled files and retired skills before assembling a package.
+await rm(path.join(root, 'dist'), { recursive: true, force: true })
 console.log('Building TypeScript…')
 execSync('tsc --project tsconfig.build.json', { cwd: root, stdio: 'inherit' })
 

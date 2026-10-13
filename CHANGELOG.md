@@ -11,6 +11,8 @@ All notable changes to agntcms are recorded here. Versions are released in locks
 - Publish skills describe filesystem-only publishing and separate authorized git/deploy steps.
 - Skill sync retires the unmodified old `init` skill while preserving customized files. Runtime and skills updates use one exact published version.
 - Corrected current requirements and counts (17 skills, 20 template sections); added CI for package tests, types, builds and the template.
+- Newly scaffolded projects pin runtime and skills to the exact CLI release version.
+- Skill builds clear stale output before packaging; `release:prepare` builds and packs the current version without another bump or publication.
 
 No frozen files or public exports changed. Existing sites must replace raw preview-cookie or native `draftMode()` checks with `getPreviewMode()` in both the page and layout (ARCHITECTURE.md §3/§6).
 

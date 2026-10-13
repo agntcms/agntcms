@@ -22,7 +22,8 @@
     "typecheck": "turbo run typecheck",
     "test": "vitest run --passWithNoTests",
     "template:dev": "turbo run dev --filter=agntcms-template...",
-    "release": "node scripts/release.mjs"
+    "release": "node scripts/release.mjs",
+    "release:prepare": "node scripts/prepare-release.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

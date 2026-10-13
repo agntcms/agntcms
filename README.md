@@ -157,6 +157,8 @@ holds the three published packages: `@agntcms/next` (the runtime), `@agntcms/ski
 is the reference project the CLI generates from. Build everything with `pnpm build`
 and run the template locally with `pnpm template:dev`.
 
+For package preparation and npm publication, see [RELEASING.md](RELEASING.md).
+
 ## Roadmap
 
 Deliberately short — v0.5 is published, and the rest will be shaped by what people
