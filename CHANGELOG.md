@@ -2,7 +2,7 @@
 
 All notable changes to agntcms are recorded here. Versions are released in lockstep across all published packages: `@agntcms/next`, `@agntcms/skills`, `create-agntcms-app`.
 
-## [0.5.10] — Unreleased
+## [0.5.10] — 2026-10-13
 
 ### Fixes
 
