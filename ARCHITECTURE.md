@@ -76,7 +76,7 @@ my-agntcms-site/
 │   │   └── ...
 │   └── config.ts                         # explicit registration of sections and adapters
 │
-├── content/                              # CONTENT, everything committed to git
+├── content/                              # CONTENT, published content and history committed to git
 │   ├── pages/                            # published pages
 │   ├── drafts/                           # drafts
 │   ├── globals/                          # global content blocks (header, footer, etc.)
@@ -131,9 +131,9 @@ The contract resolves this with two mechanisms:
 
 1. **One catch-all dispatcher for the entire admin surface.** All admin endpoints (`assets`, `draft/*` including `draft/replace-section`, `page/*`, `global/*`, `global-draft/*`, `preview/*`) are served by a single file in the template: `app/api/agntcms/[...path]/route.dev.ts`. Inside, it calls `createagntcmsRouteHandler` from `@agntcms/next/handlers`, which holds the routing table. New endpoints are added to that table inside the framework and arrive in user projects through a regular `pnpm up @agntcms/next` — the template is not touched.
 
-2. **The `.dev.ts` suffix and `pageExtensions`.** `withagntcms()` sets `pageExtensions` to `['ts', 'tsx', 'js', 'jsx']` in production and adds `'dev.ts'` / `'dev.tsx'` in development. Any route or page file whose name ends in `.dev.ts(x)` is therefore visible to Next.js only during `pnpm dev`. The catch-all dispatcher uses this suffix, so the entire admin surface disappears from the production build — `next build` only emits `[[...slug]]`, `not-found`, `sitemap`, and `robots`. The admin/preview UI is a dev-time tool by design; production is read-only.
+2. **The `.dev.ts` suffix and `pageExtensions`.** `withagntcms()` sets `pageExtensions` to `['ts', 'tsx', 'js', 'jsx']` in production and adds `'dev.ts'` / `'dev.tsx'` in development. Any route or page file whose name ends in `.dev.ts(x)` is therefore visible to Next.js only during `pnpm dev`. The catch-all dispatcher uses this suffix, so the entire admin surface disappears from the production build — `next build` only emits `[[...slug]]`, `not-found`, `sitemap`, and `robots`. The admin/preview UI is a dev-time tool by design; production is read-only. `getPreviewMode()` returns `published` before reading cookies in production, so a forged preview flag cannot enable editing or select drafts. Site page and layout proxies must both use this helper.
 
-`withagntcms()` also injects `outputFileTracingIncludes: { '/**': ['./content/**/*'] }` (merged with any user-provided entries). Nothing in the codebase `import`s the JSON files under `content/`; they are read from disk at request time by the filesystem adapter. Without this hint, Next.js does not trace them and a serverless deploy (Vercel) ships without the content directory, making every page render as not-found. Users running on a long-lived server with the repository present on disk do not need this, but the cost of always emitting it is zero.
+`withagntcms()` traces `content/pages/**/*` and `content/globals/**/*` in production (merged with user includes), and explicitly excludes `drafts/`, `global-drafts/`, `history/`, and `history-globals/`, even when a user has a broader include. Development retains the full content glob. Nothing in the codebase `import`s the JSON files under `content/`; they are read from disk at request time by the filesystem adapter. Without this hint, Next.js does not trace them and a serverless deploy (Vercel) ships without the content directory, making every page render as not-found. Users running on a long-lived server with the repository present on disk do not need this, but the cost of always emitting it is zero.
 
 ## 4. Data model and versioning
 
@@ -194,7 +194,7 @@ Globals follow the same rules: every change that actually modifies content write
 
 Version history lives in files under `content/history/` and `content/history-globals/`, not in git. Git is used for collaborative development of code and deployment; our content-versioning system lives in parallel to it. This is a separation of concerns: git does not know about the domain concepts "draft" and "published version".
 
-All folders under `content/` (including `pages/`, `drafts/`, `globals/`, `history/`, `history-globals/`) are committed to git. This keeps the repository and the production site in a consistent state.
+Published pages, globals, and history are committed to git. The template ignores page drafts by default; projects that need to hand off drafts must explicitly configure their tracking policy. Drafts and history are never part of the production tracing bundle.
 
 ### Publishing and git
 

@@ -16,6 +16,7 @@
 import { readdir, readFile, cp, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import { retiredSkills, retireUnmodifiedSkill } from './retired.js'
 
 export interface SkillModule {
   /** Human-readable name, matches the `name` field in the SKILL.md frontmatter. */
@@ -61,7 +62,7 @@ export const agntcmsSkills: ReadonlyArray<SkillModule> = [
   },
   {
     name: 'agntcms-git-publish',
-    description: 'Commit conventions for agent-driven complex edits vs. runtime auto-commits on publish.',
+    description: 'Authorized git commits and deployment after filesystem-only publishing.',
     slug: 'git-publish',
     path: 'skills/git-publish/SKILL.md',
   },
@@ -141,8 +142,9 @@ export interface SyncResult {
 /**
  * Copies every skill from this package's dist/skills/ into `<targetDir>/.claude/skills/`.
  *
- * Idempotent: overwrites existing files by the same slug; never deletes folders
- * whose slug is absent from the bundle (custom user skills are preserved).
+ * Idempotent: overwrites existing files by the same slug; preserves custom folders.
+ * A retired canonical skill is removed only when its
+ * content matches the known upstream Git blob and the folder has no extra files.
  *
  * Designed to be called both by the CLI at scaffold time and by the
  * `agntcms-skills-sync` bin at update time, so the copy logic lives here once.
@@ -174,6 +176,10 @@ export async function syncSkills(targetDir: string): Promise<SyncResult> {
     await mkdir(dstSlugDir, { recursive: true })
     await cp(srcFile, dstFile)
     count++
+  }
+
+  for (const [slug, blob] of Object.entries(retiredSkills)) {
+    await retireUnmodifiedSkill(dstSkillsDir, slug, blob)
   }
 
   return { count, version }

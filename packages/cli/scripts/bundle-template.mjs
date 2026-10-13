@@ -4,7 +4,7 @@
  * Run after tsup completes (wired via onSuccess in tsup.config.ts).
  * template/package.json is copied verbatim — workspace:* specifiers are left
  * intact so that scaffold.ts::rewriteWorkspaceDeps can handle both rewrite paths
- * at scaffold time: concrete ^<version> in normal mode, file: refs in --local mode.
+ * at scaffold time: one exact version in normal mode, file: refs in --local mode.
  * Pre-rewriting here would strip the workspace: marker before the runtime rewrite
  * runs, breaking --local mode.
  *

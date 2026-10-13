@@ -42,7 +42,8 @@ export interface GetPreviewModeOptions {
 
 /**
  * Resolve the current request's preview `mode` from the agntcms preview
- * cookie. Returns `'preview'` when the cookie is set to the on-value,
+ * cookie. Production always returns `'published'`. In development, returns
+ * `'preview'` when the cookie is set to the on-value,
  * `'published'` otherwise.
  *
  * Use this in `app/layout.tsx` and `app/[[...slug]]/page.tsx` to feed the
@@ -54,6 +55,9 @@ export interface GetPreviewModeOptions {
 export async function getPreviewMode(
   options?: GetPreviewModeOptions,
 ): Promise<PreviewMode> {
+  // A client-controlled flag must never activate the dev-only editor in production.
+  if (process.env.NODE_ENV === 'production') return 'published'
+
   const cookieName = options?.cookieName ?? PREVIEW_COOKIE_NAME
   const store = await cookies()
   const value = store.get(cookieName)?.value

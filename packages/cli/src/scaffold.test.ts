@@ -135,16 +135,20 @@ describe('scaffold', () => {
     expect(Object.hasOwn(pkg, 'private')).toBe(false)
   })
 
-  it('rewrites package.json: workspace:* replaced by ^<version>', async () => {
+  it('pins runtime and skills to the exact CLI release version', async () => {
     const target = path.join(tmpDir, 'workspace-rewrite')
     await scaffold(target)
 
     const raw = fs.readFileSync(path.join(target, 'package.json'), 'utf-8')
-    const pkg = JSON.parse(raw) as { dependencies: Record<string, string> }
+    const pkg = JSON.parse(raw) as {
+      dependencies: Record<string, string>
+      devDependencies: Record<string, string>
+    }
     const nextVersion = pkg.dependencies['@agntcms/next']
     expect(nextVersion).toBeDefined()
     expect(nextVersion).not.toMatch(/^workspace:/)
-    expect(nextVersion).toMatch(/^\^/)
+    expect(nextVersion).toBe('0.0.0-dev')
+    expect(pkg.devDependencies['@agntcms/skills']).toBe(nextVersion)
   })
 
   it('--local: rewrites package.json workspace:* to file: references', async () => {
@@ -161,10 +165,10 @@ describe('scaffold', () => {
     const nextRef = pkg.dependencies['@agntcms/next']
     expect(nextRef).toBeDefined()
     expect(nextRef).toMatch(/^file:/)
-    expect(nextRef).toContain('packages/next')
+    expect(nextRef).toContain(path.join('packages', 'next'))
 
     // The file: path must be absolute (so the project works from any location).
-    expect(nextRef?.startsWith('file:/')).toBe(true)
+    expect(path.isAbsolute(nextRef?.slice('file:'.length) ?? '')).toBe(true)
 
     // No workspace: references must remain.
     const allDeps = {

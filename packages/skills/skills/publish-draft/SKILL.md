@@ -1,7 +1,7 @@
 ---
 name: agntcms-publish-draft
 user-invocable: true
-description: Publishes a draft by calling the framework's publish endpoint. Never moves files manually — the endpoint owns the draft→published promotion and the git commit.
+description: Publishes a draft by calling the framework's publish endpoint. Never moves files manually — the endpoint owns the draft→published promotion and version history.
 ---
 
 # agntcms Publish Draft
@@ -20,7 +20,7 @@ Use this skill when:
 Do NOT use this skill:
 - For routine draft editing — write the draft and let the user publish from the UI.
 - To move files between `content/drafts/` and `content/pages/` directly. The endpoint owns
-  that operation. Manual file movement bypasses the git commit and version history.
+  that operation. Manual file movement bypasses version history.
 
 ---
 
@@ -47,7 +47,10 @@ Content-Type: application/json
 The endpoint:
 1. Moves `content/drafts/<slug>.json` to `content/pages/<slug>.json`.
 2. Writes a versioned snapshot to `content/history/<slug>/<timestamp>.json`.
-3. Commits the change to git with the message `agntcms: publish <slug>`.
+3. Removes the draft after the published page and history snapshot are saved.
+
+The endpoint is dev-only. Publishing changes local files; it does not commit, push,
+or deploy. Use the configured dev-server origin (localhost:3000 by default).
 
 Use a native HTTP tool (e.g. `curl` or a fetch-capable script). Example with curl:
 
@@ -61,13 +64,13 @@ curl -s -X POST http://localhost:3000/api/agntcms/draft/publish \
 
 ## Step 3: Interpret the response
 
-**Success** — HTTP 200, body `{"ok": true}`:
+**Success** — HTTP 200, body `{"ok": true, "page": {...}}`:
 - The draft is now live at `content/pages/<slug>.json`.
-- A git commit was made by the runtime.
+- No git commit or deployment was made by the runtime.
 - Continue to Step 4 to get a preview URL.
 
 **Failure** — any non-200 status or `{"ok": false, "error": "..."}`:
-- The draft was NOT moved. The file at `content/drafts/<slug>.json` is unchanged.
+- Inspect the published page, draft, and history before retrying; an I/O failure can occur after a partial write.
 - Report the error exactly as received from the endpoint.
 - Do not retry without the user's instruction.
 
@@ -109,7 +112,7 @@ Response shape:
 Report both the live URL and the preview URL:
 
 ```
-Published. View the live page:
+Published locally. View the page:
 http://localhost:3000/<slug>
 
 To continue editing in preview mode:
@@ -119,7 +122,7 @@ http://localhost:3000/api/agntcms/preview/enter?token=<token>
 If preview issue failed:
 
 ```
-Published. The page is now live at:
+Published locally. The page is available at:
 http://localhost:3000/<slug>
 
 (Could not obtain a preview URL — try asking me for a preview of '<slug>' later.)
@@ -149,11 +152,12 @@ Always report these back to the user. Never leave an operation unacknowledged.
 ## Key rules
 
 1. **Never move files manually.** Only the publish endpoint moves files from `content/drafts/`
-   to `content/pages/`. Manual moves skip the git commit and version history.
+   to `content/pages/`. Manual moves skip version history.
 2. **Verify locally first.** Check the draft file exists before calling the endpoint. A local
    check is faster and gives a clearer error message.
-3. **Do not double-commit.** The endpoint makes the git commit. Do not run `git add` or
-   `git commit` after a successful publish — this would create a redundant second commit.
+3. **Git is separate.** After local verification, commit and push only when authorized
+   by the user or the established automation policy. Follow `agntcms-git-publish`;
+   include the exact changed content, history, draft deletion, and used assets.
 4. **One slug at a time.** The endpoint accepts a single slug per request. If the user wants
    to publish multiple pages, call the endpoint once per slug.
 5. **Report outcome clearly.** Whether success or failure, the user needs to know what happened
